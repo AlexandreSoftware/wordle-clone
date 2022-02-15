@@ -1,0 +1,22 @@
+{
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "name": "wordle-clone-backend",
+  "version": "1.0.0",
+  "description": "wordle clone ",
+  "main": "index.ts",
+  "scripts": {
+    "start": "nodemon",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.18",
+    "express": "^4.17.2",
+    "mongoose": "^6.2.1",
+    "ts-node": "^10.5.0"
+  }
+}
