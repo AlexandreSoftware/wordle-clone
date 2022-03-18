@@ -1,10 +1,8 @@
 import { Request,Response } from "express"
 import WordleUser from "../model/WordleUser";
 import bcrypt from  "bcrypt-nodejs";
-import { ExpandedConnection } from "../model/ExpandedConnection";
 import mongo from "mongoose";
 import Game from "../model/Game";
-import { finished } from "stream";
 export async function userGetAll(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
     let obj = await db.find().exec();
@@ -30,7 +28,6 @@ export async function UserGet (req:Request,res:Response){
         let response : WordleUser = {
             _id : obj._id,
             UserName : obj.UserName,
-            Password : obj.Password,
             Admin : obj.Admin,
             Games : formatedGames,
         }

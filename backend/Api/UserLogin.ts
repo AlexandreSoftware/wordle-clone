@@ -5,7 +5,7 @@ import WordleUser from "../model/WordleUser";
 export async function  Login(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
     let response = await db.findOne({UserName: req.body.UserName})
-    if(response!=undefined){
+    if(response!=undefined&&response.Password!= undefined){
         if(bcrypt.compareSync(req.body.Password,response.Password.toString())){
             res.send("LoggedIn")
         }
