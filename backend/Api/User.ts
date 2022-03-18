@@ -5,8 +5,21 @@ import mongo from "mongoose";
 import Game from "../model/Game";
 export async function userGetAll(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
-    let obj = await db.find().exec();
-    res.send(obj)
+    let obj = await db.find().exec((err,obj)=>{
+        if(err){
+            console.log(err)
+            res.status(500).send("ERROR");
+        }
+        else{
+            obj.map(x=>{
+                x["__v"]=undefined;
+                x.Password=undefined;
+                return x;
+            });
+            res.send(obj)
+        }
+    });
+    
 }
 export async function UserGet (req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
@@ -88,6 +101,7 @@ export async function UserPut(req:Request,res:Response){
             }
             else{
                 obj.Password=undefined
+                obj["__v"]=undefined
                 res.send(obj)
             }
         })
