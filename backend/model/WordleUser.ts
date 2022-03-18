@@ -1,18 +1,19 @@
-import { Schema,Types} from "mongoose";
-export default new Schema({
+export default interface WordleUser{
+    _id?:string 
     UserName: String,
     Password:String,
-    Games:[
+    Admin:Boolean,
+    Games?:[
         {
-            _id:Types.ObjectId,
+            _id:Number,
             CorrectWord:String,
             WordLength:Number,
             MaxTries:Number,
             WrongTries:[
-                String
+                
             ],
 
         }
     ]
     
-})
+}

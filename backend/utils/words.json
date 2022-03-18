@@ -1,0 +1,835 @@
+[
+    {
+        "name": "aircraft",
+        "relation": "action"
+    },
+    {
+        "name": "alarm",
+        "relation": "action"
+    },
+    {
+        "name": "album",
+        "relation": "action"
+    },
+    {
+        "name": "ambulance",
+        "relation": "action"
+    },
+    {
+        "name": "apparatus",
+        "relation": "action"
+    },
+    {
+        "name": "aquarium",
+        "relation": "action"
+    },
+    {
+        "name": "armchair",
+        "relation": "action"
+    },
+    {
+        "name": "arrow",
+        "relation": "action"
+    },
+    {
+        "name": "suitcase",
+        "relation": "action"
+    },
+    {
+        "name": "purse",
+        "relation": "action"
+    },
+    {
+        "name": "ball",
+        "relation": "action"
+    },
+    {
+        "name": "bar",
+        "relation": "action"
+    },
+    {
+        "name": "barrel",
+        "relation": "action"
+    },
+    {
+        "name": "stand",
+        "relation": "action"
+    },
+    {
+        "name": "basket",
+        "relation": "action"
+    },
+    {
+        "name": "tub",
+        "relation": "action"
+    },
+    {
+        "name": "battery",
+        "relation": "action"
+    },
+    {
+        "name": "beam",
+        "relation": "action"
+    },
+    {
+        "name": "bed",
+        "relation": "action"
+    },
+    {
+        "name": "bell",
+        "relation": "action"
+    },
+    {
+        "name": "bench",
+        "relation": "action"
+    },
+    {
+        "name": "workbench",
+        "relation": "action"
+    },
+    {
+        "name": "bike",
+        "relation": "action"
+    },
+    {
+        "name": "bin",
+        "relation": "action"
+    },
+    {
+        "name": "blade",
+        "relation": "action"
+    },
+    {
+        "name": "boat",
+        "relation": "action"
+    },
+    {
+        "name": "bolt",
+        "relation": "action"
+    },
+    {
+        "name": "bomb",
+        "relation": "action"
+    },
+    {
+        "name": "bomber",
+        "relation": "action"
+    },
+    {
+        "name": "hamper",
+        "relation": "action"
+    },
+    {
+        "name": "bottle",
+        "relation": "action"
+    },
+    {
+        "name": "freighter",
+        "relation": "action"
+    },
+    {
+        "name": "bow",
+        "relation": "action"
+    },
+    {
+        "name": "bowl",
+        "relation": "action"
+    },
+    {
+        "name": "box",
+        "relation": "action"
+    },
+    {
+        "name": "brake",
+        "relation": "action"
+    },
+    {
+        "name": "brick",
+        "relation": "action"
+    },
+    {
+        "name": "brush",
+        "relation": "action"
+    },
+    {
+        "name": "pail",
+        "relation": "action"
+    },
+    {
+        "name": "bulb",
+        "relation": "action"
+    },
+    {
+        "name": "bullet",
+        "relation": "action"
+    },
+    {
+        "name": "bundle",
+        "relation": "action"
+    },
+    {
+        "name": "bus",
+        "relation": "action"
+    },
+    {
+        "name": "button",
+        "relation": "action"
+    },
+    {
+        "name": "cabinet",
+        "relation": "action"
+    },
+    {
+        "name": "call",
+        "relation": "action"
+    },
+    {
+        "name": "camera",
+        "relation": "action"
+    },
+    {
+        "name": "candle",
+        "relation": "action"
+    },
+    {
+        "name": "cane",
+        "relation": "action"
+    },
+    {
+        "name": "car",
+        "relation": "action"
+    },
+    {
+        "name": "rug",
+        "relation": "action"
+    },
+    {
+        "name": "pram",
+        "relation": "action"
+    },
+    {
+        "name": "cart",
+        "relation": "action"
+    },
+    {
+        "name": "case",
+        "relation": "action"
+    },
+    {
+        "name": "cassette",
+        "relation": "action"
+    },
+    {
+        "name": "cell",
+        "relation": "action"
+    },
+    {
+        "name": "chain",
+        "relation": "action"
+    },
+    {
+        "name": "chair",
+        "relation": "action"
+    },
+    {
+        "name": "chalk",
+        "relation": "action"
+    },
+    {
+        "name": "clock",
+        "relation": "action"
+    },
+    {
+        "name": "club",
+        "relation": "action"
+    },
+    {
+        "name": "coffin",
+        "relation": "action"
+    },
+    {
+        "name": "column",
+        "relation": "location"
+    },
+    {
+        "name": "compact",
+        "relation": "action"
+    },
+    {
+        "name": "computer",
+        "relation": "action"
+    },
+    {
+        "name": "counter",
+        "relation": "action"
+    },
+    {
+        "name": "cream",
+        "relation": "action"
+    },
+    {
+        "name": "crown",
+        "relation": "action"
+    },
+    {
+        "name": "crutch",
+        "relation": "action"
+    },
+    {
+        "name": "cup",
+        "relation": "action"
+    },
+    {
+        "name": "curtain",
+        "relation": "action"
+    },
+    {
+        "name": "desk",
+        "relation": "action"
+    },
+    {
+        "name": "sensor",
+        "relation": "action"
+    },
+    {
+        "name": "dish",
+        "relation": "action"    
+    },
+    {
+        "name": "drawer",
+        "relation": "action"    
+    },
+    {
+        "name": "drill",
+        "relation": "action"    
+    },
+    {
+        "name": "drum",
+        "relation": "action"    
+    },
+    {
+        "name": "engine",
+        "relation": "action"
+    
+    },
+    {
+        "name": "envelope",
+        "relation": "action"
+    },
+    {
+        "name": "equipment",
+        "relation": "action"
+    },
+    {
+        "name": "perfume",
+        "relation": "action"
+    },
+    {
+        "name": "smell",
+        "relation": "action"
+    },
+    {
+        "name": "fax",
+        "relation": "action"
+    },
+    {
+        "name": "ferry",
+        "relation": "action"
+    },
+    {
+        "name": "file",
+        "relation": "action"
+    },
+    {
+        "name": "film",
+        "relation": "action"
+    },
+    {
+        "name": "filter",
+        "relation": "action"
+    },
+    {
+        "name": "flash",
+        "relation": "instrument"
+    },
+    {
+        "name": "furniture",
+        "relation": "action"
+    },
+    {
+        "name": "accelerator",
+        "relation": "action"
+    },
+    {
+        "name": "glass",
+        "relation": "action"
+    },
+    {
+        "name": "glasses",
+        "relation": "action"
+    },
+    {
+        "name": "guitar",
+        "relation": "agent"
+    },
+    {
+        "name": "gun",
+        "relation": "action"
+    },
+    {
+        "name": "hammer",
+        "relation": "action"
+    },
+    {
+        "name": "chopper",
+        "relation": "action"
+    },
+    {
+        "name": "hook",
+        "relation": "action"
+    },
+    {
+        "name": "horn",
+        "relation": "action"
+    },
+    {
+        "name": "instrument",
+        "relation": "cause"
+    },
+    {
+        "name": "jar",
+        "relation": "action"
+    },
+    {
+        "name": "kettle",
+        "relation": "action"
+    },
+    {
+        "name": "key",
+        "relation": "action"
+    },
+    {
+        "name": "knife",
+        "relation": "action"
+    },
+    {
+        "name": "knot",
+        "relation": "action"
+    },
+    {
+        "name": "lamp",
+        "relation": "action"
+    },
+    {
+        "name": "laser",
+        "relation": "action"
+    },
+    {
+        "name": "leash",
+        "relation": "action"
+    },
+    {
+        "name": "leg",
+        "relation": "action"
+    },
+    {
+        "name": "elevator",
+        "relation": "action"
+    },
+    {
+        "name": "lift",
+        "relation": "action"
+    },
+    {
+        "name": "light",
+        "relation": "action"
+    },
+    {
+        "name": "lighter",
+        "relation": "action"
+    },
+    {
+        "name": "line",
+        "relation": "action"
+    },
+    {
+        "name": "production_line",
+        "relation": "action"
+    },
+    {
+        "name": "link",
+        "relation": "action"
+    },
+    {
+        "name": "lock",
+        "relation": "action"
+    },
+    {
+        "name": "lounge",
+        "relation": "action"
+    },
+    {
+        "name": "mug",
+        "relation": "action"
+    },
+    {
+        "name": "mouse",
+        "relation": "action"
+    },
+    {
+        "name": "missile",
+        "relation": "action"
+    },
+    {
+        "name": "mirror",
+        "relation": "action"
+    },
+    {
+        "name": "mine",
+        "relation": "action"
+    },
+    {
+        "name": "mill",
+        "relation": "action"
+    },
+    {
+        "name": "microphone",
+        "relation": "action"
+    },
+    {
+        "name": "memory",
+        "relation": "action"
+    },
+    {
+        "name": "measure",
+        "relation": "action"
+    },
+    {
+        "name": "maze",
+        "relation": "action"
+    },
+    {
+        "name": "match",
+        "relation": "action"
+    },
+    {
+        "name": "marble",
+        "relation": "action"
+    },
+    {
+        "name": "makeup",
+        "relation": "action"
+    },
+    {
+        "name": "pump",
+        "relation": "action"
+    },
+    {
+        "name": "printer",
+        "relation": "action"
+    },
+    {
+        "name": "press",
+        "relation": "action"
+    },
+    {
+        "name": "pot",
+        "relation": "action"
+    },
+    {
+        "name": "pole",
+        "relation": "action"
+    },
+    {
+        "name": "pocket",
+        "relation": "action"
+    },
+    {
+        "name": "plane",
+        "relation": "action"
+    },
+    {
+        "name": "pill",
+        "relation": "action"
+    },
+    {
+        "name": "pier",
+        "relation": "action"
+    },
+    {
+        "name": "piano",
+        "relation": "action"
+    },
+    {
+        "name": "pencil",
+        "relation": "action"
+    },
+    {
+        "name": "pen",
+        "relation": "action"
+    },
+    {
+        "name": "paper",
+        "relation": "action"
+    },
+    {
+        "name": "pan",
+        "relation": "action"
+    },
+    {
+        "name": "packet",
+        "relation": "action"
+    },
+    {
+        "name": "pack",
+        "relation": "action"
+    },
+    {
+        "name": "organ",
+        "relation": "action"
+    },
+    {
+        "name": "notebook",
+        "relation": "action"
+    },
+    {
+        "name": "net",
+        "relation": "action"
+    },
+    {
+        "name": "needle",
+        "relation": "action"
+    },
+    {
+        "name": "nail",
+        "relation": "action"
+    },
+    {
+        "name": "shaft",
+        "relation": "action"
+    },
+    {
+        "name": "seat",
+        "relation": "action"
+    },
+    {
+        "name": "screw",
+        "relation": "action"
+    },
+    {
+        "name": "screen",
+        "relation": "action"
+    },
+    {
+        "name": "scale",
+        "relation": "action"
+    },
+    {
+        "name": "satellite",
+        "relation": "action"
+    },
+    {
+        "name": "rocket",
+        "relation": "action"
+    },
+    {
+        "name": "rifle",
+        "relation": "action"
+    },
+    {
+        "name": "register",
+        "relation": "action"
+    },
+    {
+        "name": "recording",
+        "relation": "action"
+    },
+    {
+        "name": "reactor",
+        "relation": "action"
+    },
+    {
+        "name": "railcar",
+        "relation": "action"
+    },
+    {
+        "name": "radio",
+        "relation": "action"
+    },
+    {
+        "name": "tool",
+        "relation": "action"
+    },
+    {
+        "name": "tin",
+        "relation": "action"
+    },
+    {
+        "name": "throne",
+        "relation": "action"
+    },
+    {
+        "name": "terminal",
+        "relation": "action"
+    },
+    {
+        "name": "television",
+        "relation": "action"
+    },
+    {
+        "name": "telephone",
+        "relation": "action"
+    },
+    {
+        "name": "taxi",
+        "relation": "agent"
+    },
+    {
+        "name": "tape",
+        "relation": "action"
+    },
+    {
+        "name": "tap",
+        "relation": "action"
+    },
+    {
+        "name": "tank",
+        "relation": "action"
+    },
+    {
+        "name": "table",
+        "relation": "action"
+    },
+    {
+        "name": "sword",
+        "relation": "action"
+    },
+    {
+        "name": "switch",
+        "relation": "action"
+    },
+    {
+        "name": "swing",
+        "relation": "action"
+    },
+    {
+        "name": "support",
+        "relation": "action"
+    },
+    {
+        "name": "stool",
+        "relation": "action"
+    },
+    {
+        "name": "stick",
+        "relation": "action"
+    },
+    {
+        "name": "spring",
+        "relation": "action"
+    },
+    {
+        "name": "spoon",
+        "relation": "action"
+    },
+    {
+        "name": "speaker",
+        "relation": "action"
+    },
+    {
+        "name": "ski",
+        "relation": "action"
+    },
+    {
+        "name": "shell",
+        "relation": "action"
+    },
+    {
+        "name": "shelf",
+        "relation": "action"
+    },
+    {
+        "name": "whip",
+        "relation": "action"
+    },
+    {
+        "name": "wheel",
+        "relation": "action"
+    },
+    {
+        "name": "weight",
+        "relation": "action"
+    },
+    {
+        "name": "weapon",
+        "relation": "action"
+    },
+    {
+        "name": "watch",
+        "relation": "action"
+    },
+    {
+        "name": "wagon",
+        "relation": "action"
+    },
+    {
+        "name": "video",
+        "relation": "action"
+    },
+    {
+        "name": "vessel",
+        "relation": "action"
+    },
+    {
+        "name": "vehicle",
+        "relation": "action"
+    },
+    {
+        "name": "vat",
+        "relation": "action"
+    },
+    {
+        "name": "van",
+        "relation": "action"
+    },
+    {
+        "name": "truck",
+        "relation": "action"
+    },
+    {
+        "name": "trolley",
+        "relation": "action"
+    },
+    {
+        "name": "tray",
+        "relation": "action"
+    },
+    {
+        "name": "trap",
+        "relation": "action"
+    },
+    {
+        "name": "transmission",
+        "relation": "action"
+    },
+    {
+        "name": "train",
+        "relation": "action"
+    },
+    {
+        "name": "torch",
+        "relation": "action"
+    },
+    {
+        "name": "wing",
+        "relation": "action"
+    },
+    {
+        "name": "wire",
+        "relation": "action"
+    },
+    {
+        "name": "yacht",
+        "relation": "action"
+    }
+]
