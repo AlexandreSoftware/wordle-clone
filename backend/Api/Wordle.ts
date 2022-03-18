@@ -1,30 +1,41 @@
 import { Request,Response } from "express"
 import bcrypt from "bcrypt";
 import mongo, { PromiseProvider } from "mongoose";
-import getWords from "../utils/DictionaryApi";
+import {GetWords,ValidateWord} from "../utils/DictionaryApi";
 import WordleUser from "../model/WordleUser";
 import Game from "../model/Game";
 import Answer from "../model/Answer";
+import CorrectWord from "../model/CorrectWord"
 export async function WordleTryQuestion(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesGuess(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
     let response = await db.findOne({UserName: req.body.UserName})
-    let game = response?.Games?.find(x=>+x._id==bodyvalues.Id)
-    if(game?.CorrectWord == bodyvalues.Guess){
-        res.send([...game?.CorrectWord].map(x=>{return { letter:x,correct:2}}))
+    let game = response?.Games?.find(x=>+x._id==bodyvalues.Id);
+    if(ValidateWordLength(bodyvalues.Guess,game?.CorrectWord.word.name.length!)){
+        if(await ValidateWord(bodyvalues.Guess)){
+            if(game?.CorrectWord.word.name == bodyvalues.Guess){
+                res.send([...game?.CorrectWord.word.name].map(x=>{return { letter:x,correct:2}}))
+            }
+            else{
+                res.send(SortWords(bodyvalues.Guess,game?.CorrectWord.word.name!))
+            }
+        }
+        else{
+            res.send("Incorrect Word")
+        }
     }
     else{
-        res.send(SortWords(bodyvalues.Guess,game?.CorrectWord!))
+        res.send(`Incorrect Length, correct Length is ${game?.CorrectWord.word.name.length}`)
     }
 }
 export async function InsertWordleGame(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesInsert(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
     let response = await db.findOne({UserName: req.body.UserName})
-    const CorrectWord = await getWords(req.body.WordLength)
+    const correctWord :CorrectWord= await GetWords(req.body.WordLength)
     let game :Game = { 
         _id:response?.Games?.length!,
-        CorrectWord,
+        CorrectWord:correctWord,
         MaxTries : bodyvalues.MaxTries,
         WordLength : bodyvalues.WordLength,
         WrongTries : [],
@@ -80,4 +91,7 @@ function RemoveFromArray(cchar, phrase){
         }
     }
     return arr;
+}
+function ValidateWordLength(word:String,length:number){
+    return word.length==length;
 }

@@ -7,7 +7,13 @@ export default new Schema<WordleUser>({
     Games:[
         {
             _id:Number,
-            CorrectWord:String,
+            CorrectWord:{
+                word:{
+                    name:String,
+                    relation:String
+                },
+                index:Number
+            },
             WordLength:Number,
             MaxTries:Number,
             WrongTries:[],

@@ -1,3 +1,4 @@
+import CorrectWord from "./CorrectWord"
 export default interface WordleUser{
     _id?:string 
     UserName: String,
@@ -6,7 +7,7 @@ export default interface WordleUser{
     Games?:[
         {
             _id:Number,
-            CorrectWord:String,
+            CorrectWord:CorrectWord,
             WordLength:Number,
             MaxTries:Number,
             WrongTries:[
