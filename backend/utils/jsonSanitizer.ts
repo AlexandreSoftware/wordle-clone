@@ -9,5 +9,4 @@ for(e in file){
         words.push(file[e].name)
     }
 }
-console.log(words)
 fs.writeFileSync("./thj3w-f0zmk.json",JSON.stringify(newfile))

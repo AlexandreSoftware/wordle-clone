@@ -16,8 +16,8 @@ export default new Schema<WordleUser>({
             },
             WordLength:Number,
             MaxTries:Number,
-            WrongTries:[],
-            Finished:Boolean
+            Finished:Boolean,
+            WrongTries:[]
         }
     ]
     

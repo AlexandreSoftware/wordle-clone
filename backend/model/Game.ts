@@ -7,5 +7,5 @@ export default interface Game{
     WrongTries:[
         
     ],
-    finished:Boolean
+    Finished:Boolean
 }

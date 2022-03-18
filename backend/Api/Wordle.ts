@@ -21,29 +21,34 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
             }
         }
         else{
-            res.send("Incorrect Word")
+            res.status(401).send("Incorrect Word")
         }
     }
     else{
-        res.send(`Incorrect Length, correct Length is ${game?.CorrectWord.word.name.length}`)
+        res.status(401).send(`Incorrect Length, correct Length is ${game?.CorrectWord.word.name.length}`)
     }
 }
 export async function InsertWordleGame(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesInsert(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
     let response = await db.findOne({UserName: req.body.UserName})
-    const correctWord :CorrectWord= await GetWords(req.body.WordLength)
-    let game :Game = { 
-        _id:response?.Games?.length!,
-        CorrectWord:correctWord,
-        MaxTries : bodyvalues.MaxTries,
-        WordLength : bodyvalues.WordLength,
-        WrongTries : [],
-        finished:false
+    if(response != null){
+        const correctWord :CorrectWord= await GetWords(req.body.WordLength)
+        let game :Game = { 
+            _id:response?.Games?.length!,
+            CorrectWord:correctWord,
+            MaxTries : bodyvalues.MaxTries,
+            WordLength : bodyvalues.WordLength,
+            WrongTries : [],
+            Finished:false
+        }
+        response?.Games?.push(game);
+        response?.save();
+        res.send(game)
     }
-    response?.Games?.push(game);
-    response?.save();
-    res.send(game)
+    else{
+        res.status(401).send("ERROR")
+    }
 }
 function GetDefaultValuesGuess(props){
     let newvalues= {Id:0,Guess:""};
