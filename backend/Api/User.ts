@@ -74,8 +74,24 @@ export async function UserPut(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
     if(await ValidateUser(user,db)){
         let obj = new db(user)
-        await obj.save()
-        return res.send(obj)
+        
+        await obj.save((err,obj)=>{
+            
+            if(err){
+                console.log(err)
+                if(err.message.includes("duplicate key error collection:")&&err.message.includes("dup key: { UserName:")){
+                    res.status(501).send("ERROR:UserName Already Exists")
+                }
+                else{
+                    res.status(500).send("ERROR")
+                }
+            }
+            else{
+                obj.Password=undefined
+                res.send(obj)
+            }
+        })
+        
     }
     else{
         res.status(401).send("UserName Already Exists")
