@@ -10,32 +10,39 @@ export async function userGetAll(req:Request,res:Response){
 }
 export async function UserGet (req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
-    let obj = await db.findOne({_id:mongo.Types.ObjectId.createFromHexString(req.params.id)}).exec();
     
-    if(obj != null){
-        let formatedGames= (obj.Games?.map((x:Game)=>{
-            if(x.Finished==false){
-                x.CorrectWord={
-                    index:x.CorrectWord.index,
-                    word:{
-                        name:"",
-                        relation:x.CorrectWord.word.relation
-                    }
-                };
+    let obj = db.findOne({_id:mongo.Types.ObjectId.createFromHexString(req.params.id)}).exec((err,obj)=>
+        {
+            if(err){
+                console.log(err)
+                console.log("test")
+                res.status(500).send("ERROR");
             }
-            return x;
-        }));
-        let response : WordleUser = {
-            _id : obj._id,
-            UserName : obj.UserName,
-            Admin : obj.Admin,
-            Games : formatedGames,
-        }
-        res.send(response)
-    }
-    else{
-        res.status(403).send("ERROR")
-    }
+            if(obj != null){
+                let formatedGames= (obj.Games?.map((x:Game)=>{
+                    if(x.Finished==false){
+                        x.CorrectWord={
+                            index:x.CorrectWord.index,
+                            word:{
+                                name:"",
+                                relation:x.CorrectWord.word.relation
+                            }
+                        };
+                    }
+                    return x;
+                }));
+                let response : WordleUser = {
+                    _id : obj._id,
+                    UserName : obj.UserName,
+                    Admin : obj.Admin,
+                    Games : formatedGames,
+                }
+                res.send(response)
+            }
+            else{
+                res.status(403).send("ERROR")
+            }
+        })
 };
 export async function UserPost(req:Request,res:Response){
     
