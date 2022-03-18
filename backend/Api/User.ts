@@ -1,4 +1,4 @@
-import { Request,Response } from "express"
+import e, { Request,Response } from "express"
 import WordleUser from "../model/WordleUser";
 import bcrypt from  "bcrypt-nodejs";
 import mongo from "mongoose";
@@ -15,7 +15,6 @@ export async function UserGet (req:Request,res:Response){
         {
             if(err){
                 console.log(err)
-                console.log("test")
                 res.status(500).send("ERROR");
             }
             if(obj != null){
@@ -54,8 +53,16 @@ export async function UserPost(req:Request,res:Response){
         Admin:IsAdmin
     }
     let db : mongo.Model<WordleUser> = req.app["db"]; 
-     await db.updateOne({ _id: req.body.Id },user).exec()
-    return res.send(true)
+    await db.updateOne({ _id: req.body.Id },user).exec((err,obj)=>{
+        if(err){
+            console.log(err)
+            res.status(500).send("Error")
+        }
+        else{
+            return res.send(obj.modifiedCount!=0)
+        }
+    })
+    
 };
 export async function UserPut(req:Request,res:Response){
     let IsAdmin :boolean = req.body.isAdmin;
@@ -74,8 +81,8 @@ export async function UserPut(req:Request,res:Response){
         res.status(401).send("UserName Already Exists")
     }
 }
+
 async function ValidateUser(user:WordleUser,db:mongo.Model<WordleUser>){
     let obj = await db.findOne(x=>user.UserName).clone().exec();
-    console.log(obj)
     return !!obj;
 }
