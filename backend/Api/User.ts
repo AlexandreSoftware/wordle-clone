@@ -24,7 +24,7 @@ export async function userGetAll(req:Request,res:Response){
 export async function UserGetId (req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
     
-    let obj = db.findOne({_id:mongo.Types.ObjectId.createFromHexString(req.params.id)}).exec((err,obj)=>
+    db.findOne({_id:mongo.Types.ObjectId.createFromHexString(req.params.id)}).exec((err,obj)=>
         {
             if(err){
                 console.log(err)
