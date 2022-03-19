@@ -3,6 +3,7 @@ import WordleUser from "../model/WordleUser";
 import bcrypt from  "bcrypt-nodejs";
 import mongo from "mongoose";
 import Game from "../model/Game";
+import { isObject } from "util";
 export async function userGetAll(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
     await db.find().exec((err,obj)=>{
@@ -14,6 +15,15 @@ export async function userGetAll(req:Request,res:Response){
             obj.map(x=>{
                 x["__v"]=undefined;
                 x.Password="";
+                x.Games = (x.Games?.map((x:Game)=>{
+                    if(x.Finished==false){
+                        x.CorrectWord={
+                            name:"",
+                            relation:x.CorrectWord.relation
+                        };
+                    }
+                    return x;
+                }))
                 return x;
             });
             res.send(obj)
@@ -46,8 +56,6 @@ export async function UserGetId (req:Request,res:Response){
                     Admin : obj.Admin,
                     Games : formatedGames,
                 }
-                console.log(response);
-                console.log(obj)
                 res.send(response)
             }
             else{
@@ -111,14 +119,44 @@ export async function UserPut(req:Request,res:Response){
     }
 }
 export async function DeleteUser(req:Request,res:Response){
-    let db:mongo.Model<WordleUser> = req.app["db"];
-
+    
 }
 
 export async function Register(req:Request,res:Response){
-
+    let db:mongo.Model<WordleUser> = req.app["db"];
+    const props = {...req.body,...req.params,...req.headers}
+    if(ValidateRegister(props)){
+        let user :WordleUser = {
+            Admin:false,
+            UserName:props.UserName,
+            Password:bcrypt.hashSync(req.body.Password)
+        }
+        let obj = new db(user);
+        obj.save((err,obj)=>{
+            if(err){
+                console.log(err)
+                if(err.message.includes("duplicate key error collection:")&&err.message.includes("dup key: { UserName:")){
+                    res.status(501).send("ERROR:UserName Already Exists")
+                }
+                else{
+                    res.status(500).send("ERROR")
+                }
+            }
+            else{
+                obj.Password=undefined
+                obj["__v"]=undefined
+                res.send(obj)
+            }
+        })
+    }
+    else{
+        res.status(401).send("invalid args")
+    }
+}
+function ValidateRegister(props){
+    return props&&props.UserName&&props.Password
 }
 async function ValidateUser(user:WordleUser,db:mongo.Model<WordleUser>){
-    let obj = await db.findOne(x=>user.UserName).clone().exec();
+    let obj = await db.findOne(x=>x.UserName==user.UserName).clone().exec();
     return !!obj||obj!==undefined||obj!==null;
 }
