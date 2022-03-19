@@ -5,7 +5,7 @@ import mongo from "mongoose";
 import Game from "../model/Game";
 export async function userGetAll(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
-    let obj = await db.find().exec((err,obj)=>{
+    await db.find().exec((err,obj)=>{
         if(err){
             console.log(err)
             res.status(500).send("ERROR");
@@ -13,7 +13,7 @@ export async function userGetAll(req:Request,res:Response){
         else{
             obj.map(x=>{
                 x["__v"]=undefined;
-                x.Password=undefined;
+                x.Password="";
                 return x;
             });
             res.send(obj)
@@ -34,11 +34,8 @@ export async function UserGetId (req:Request,res:Response){
                 let formatedGames= (obj.Games?.map((x:Game)=>{
                     if(x.Finished==false){
                         x.CorrectWord={
-                            index:x.CorrectWord.index,
-                            word:{
-                                name:"",
-                                relation:x.CorrectWord.word.relation
-                            }
+                            name:"",
+                            relation:x.CorrectWord.relation
                         };
                     }
                     return x;
@@ -49,6 +46,8 @@ export async function UserGetId (req:Request,res:Response){
                     Admin : obj.Admin,
                     Games : formatedGames,
                 }
+                console.log(response);
+                console.log(obj)
                 res.send(response)
             }
             else{
@@ -111,8 +110,15 @@ export async function UserPut(req:Request,res:Response){
         res.status(401).send("UserName Already Exists")
     }
 }
+export async function DeleteUser(req:Request,res:Response){
+    let db:mongo.Model<WordleUser> = req.app["db"];
 
+}
+
+export async function Register(req:Request,res:Response){
+
+}
 async function ValidateUser(user:WordleUser,db:mongo.Model<WordleUser>){
     let obj = await db.findOne(x=>user.UserName).clone().exec();
-    return !!obj;
+    return !!obj||obj!==undefined||obj!==null;
 }

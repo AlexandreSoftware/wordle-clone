@@ -1,4 +1,4 @@
-import CorrectWord from "./CorrectWord"
+
 import Game from "./Game"
 export default interface WordleUser{
     _id?:string 
@@ -6,4 +6,5 @@ export default interface WordleUser{
     Password?:String,
     Admin:Boolean,
     Games?:Game[]
+    
 }

@@ -6,7 +6,7 @@ export async function GetWords(length:number){
 async function getRandomWordFromDictionary(length:number){
     const index = Math.floor(WordsJson.length * Math.random())
     const word = WordsJson[index]
-    return {word,index};
+    return word;
 }
 export async function ValidateWord(word:string){
     return !!WordsJson.find(x=>x.name==word)? true:false;   

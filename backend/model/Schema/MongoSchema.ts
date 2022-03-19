@@ -8,16 +8,16 @@ export default new Schema<WordleUser>({
         {
             _id:Number,
             CorrectWord:{
-                word:{
-                    name:String,
-                    relation:String
-                },
-                index:Number
+                name:String,
+                relation:String
             },
             WordLength:Number,
             MaxTries:Number,
             Finished:Boolean,
-            WrongTries:[]
+            WrongTries:[{
+                type: String,
+              }],
+
         }
     ]
     

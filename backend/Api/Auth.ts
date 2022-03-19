@@ -7,7 +7,6 @@ export default async function Auth(req:Request,res:Response,next){
     let args = {...req.body,...req.headers}
     if(validateAuth(args)){
         let result = await redis.get(args.token)!
-        console.log(result)
         if(result&&jwt.verify(args.token,config.secretkey)){
             next();
         }

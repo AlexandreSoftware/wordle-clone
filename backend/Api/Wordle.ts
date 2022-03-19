@@ -1,40 +1,60 @@
-import { Request,Response } from "express"
-import bcrypt from "bcrypt";
-import mongo, { PromiseProvider } from "mongoose";
+import e, { Request,Response } from "express"
+import mongo from "mongoose";
 import {GetWords,ValidateWord} from "../utils/DictionaryApi";
 import WordleUser from "../model/WordleUser";
 import Game from "../model/Game";
-import Answer from "../model/Answer";
 import CorrectWord from "../model/CorrectWord"
 export async function WordleTryQuestion(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesGuess(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
     let response = await db.findOne({UserName: req.body.UserName})
     let game = response?.Games?.find(x=>+x._id==bodyvalues.Id);
-    if(ValidateWordLength(bodyvalues.Guess,game?.CorrectWord.word.name.length!)){
-        if(await ValidateWord(bodyvalues.Guess)){
-            if(game?.CorrectWord.word.name == bodyvalues.Guess){
-                res.send([...game?.CorrectWord.word.name].map(x=>{return { letter:x,correct:2}}))
+    console.log(game)
+    if(game?.CorrectWord!= undefined){
+        if(!game?.Finished){
+            if(game.WrongTries.length<game.MaxTries){
+                if(ValidateWordLength(bodyvalues.Guess,game?.CorrectWord.name.length)){
+                    if(await ValidateWord(bodyvalues.Guess)){
+                        if(game?.CorrectWord.name == bodyvalues.Guess){
+                            game.Finished=true
+                            response?.save()
+                            res.send([...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}))
+                        }
+                        else{
+                            game?.WrongTries.push(bodyvalues.Guess)
+                            response?.save()
+                            res.send(SortWords(bodyvalues.Guess,game?.CorrectWord.name!))
+                        }
+                    }
+                    else{
+                        res.status(401).send("Incorrect Word")
+                    }
+                }
+                else{
+                    res.status(401).send(`Incorrect Length, correct Length is ${game?.CorrectWord.name.length}`)
+                }
             }
             else{
-                res.send(SortWords(bodyvalues.Guess,game?.CorrectWord.word.name!))
+                res.status(401).send("Game Finished: too many wrong tries")
             }
         }
         else{
-            res.status(401).send("Incorrect Word")
+            console.log(game)
+            res.status(401).send("Game Finished: Correct Awnser")
         }
     }
     else{
-        res.status(401).send(`Incorrect Length, correct Length is ${game?.CorrectWord.word.name.length}`)
+        res.status(401).send("Game not found")
     }
 }
+
 export async function InsertWordleGame(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesInsert(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
     let response = await db.findOne({UserName: req.body.UserName})
     if(response != null){
         const correctWord :CorrectWord= await GetWords(req.body.WordLength)
-        let game :Game = { 
+        let game :Game= { 
             _id:response?.Games?.length!,
             CorrectWord:correctWord,
             MaxTries : bodyvalues.MaxTries,
@@ -44,6 +64,7 @@ export async function InsertWordleGame(req:Request,res:Response,next){
         }
         response?.Games?.push(game);
         response?.save();
+        correctWord.name="";
         res.send(game)
     }
     else{

@@ -9,7 +9,7 @@ module.exports=function live(app:ExpandedConnection){
     app.route("/user")
     .get(Auth,userGetAll)
     .post(Auth,UserPost)
-    .put(Auth,UserPut)
+    .put(UserPut)
     app.route("/login")
         .get(Login)
     app.route("/wordle")

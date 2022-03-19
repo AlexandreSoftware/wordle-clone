@@ -4,8 +4,6 @@ export default interface Game{
     CorrectWord:CorrectWord,
     WordLength:Number,
     MaxTries:Number,
-    WrongTries:[
-        
-    ],
+    WrongTries:String[],
     Finished:Boolean
 }
