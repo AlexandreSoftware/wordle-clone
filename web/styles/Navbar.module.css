@@ -1,0 +1,17 @@
+.link{
+    text-decoration-line: none;
+    color : white;
+    font-size: inherit;
+
+}
+.RightButton{
+    margin-left: auto;
+}
+.navbar_default{
+    border-color: white!important;
+}
+.navbar_default svg{
+    padding: 0%;
+    width: 100%;
+    height: 50%;
+}
