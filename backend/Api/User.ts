@@ -3,7 +3,7 @@ import WordleUser from "../model/WordleUser";
 import bcrypt from  "bcrypt-nodejs";
 import mongo from "mongoose";
 import Game from "../model/Game";
-import { isObject } from "util";
+
 export async function userGetAll(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
     await db.find().exec((err,obj)=>{
@@ -118,8 +118,19 @@ export async function UserPut(req:Request,res:Response){
         res.status(401).send("UserName Already Exists")
     }
 }
-export async function DeleteUser(req:Request,res:Response){
-    
+export async function UserDelete(req:Request,res:Response){
+    let db :mongo.Model<WordleUser> = req.app["db"];
+    const props = {...req.body,...req.params,...req.headers}
+    if(ValidateDelete(props)){
+        db.deleteOne({_id:props.id},(err,obj)=>{
+            if(err){
+                res.status(401).send("Unable to delete")
+            }
+            else{
+                res.send(obj)
+            }
+        })
+    }
 }
 
 export async function Register(req:Request,res:Response){
@@ -155,6 +166,9 @@ export async function Register(req:Request,res:Response){
 }
 function ValidateRegister(props){
     return props&&props.UserName&&props.Password
+}
+function ValidateDelete(props){
+    return props&&props.id
 }
 async function ValidateUser(user:WordleUser,db:mongo.Model<WordleUser>){
     let obj = await db.findOne(x=>x.UserName==user.UserName).clone().exec();

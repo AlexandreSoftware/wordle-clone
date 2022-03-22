@@ -14,7 +14,7 @@ tempapp.redis.on('error', err => {
 });
 let app : ExpandedConnection = tempapp
 app.redis.connect()
-let port = 3000;
+let port = 8000;
 consign({ extensions: [ '.js', '.json', '.node', '.ts' ] })
     .then("./config/middlewares.ts")
     .then("./config/routes.ts")

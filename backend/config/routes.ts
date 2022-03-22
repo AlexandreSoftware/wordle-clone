@@ -1,5 +1,5 @@
 import { ExpandedConnection } from "../model/ExpandedConnection";
-import {UserGetId,userGetAll,UserPost,UserPut, Register} from "../Api/User" ;
+import {UserGetId,userGetAll,UserPost,UserPut, UserDelete, Register} from "../Api/User" ;
 import { Login } from "../Api/UserLogin";
 import { InsertWordleGame, WordleTryQuestion } from "../Api/Wordle";
 import Auth from "../Api/Auth";
@@ -15,6 +15,7 @@ module.exports=function live(app:ExpandedConnection){
     .get(Auth,VerifyAdmin,userGetAll)
     .post(Auth,CheckForPermission, UserPost)
     .put(Auth,VerifyAdmin,UserPut)
+    .delete(Auth,CheckForPermission,UserDelete)
     app.route("/wordle")
         .put(Auth,CheckForPermission,InsertWordleGame)
     app.route("/wordle/guess")

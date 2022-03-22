@@ -5,21 +5,27 @@ import { useState } from 'react'
 import styles from '../styles/Home.module.css'
 import Wordle from './Wordle'
 import Login from './Login'
-import SSRProvider from 'react-bootstrap/SSRProvider';
+import { useEffect } from 'react'
+import Router from 'next/router'
 const Home: NextPage = () => {
-  let [logged,islogged] = useState(false)
-  return (
-        <>
-          <Head>
-            <title>Wordle</title>
-            <link rel="icon" href="/favicon.svg" />
-          </Head>
-          <SSRProvider>
-            {logged?<Wordle/>:<Login></Login>}
-          </SSRProvider>
-        </>
-
-  )
+  let [logged,SetLogged] = useState(false)
+  useEffect(()=>{
+    localStorage.setItem("token","test")
+    let token = localStorage.getItem("token")
+    localStorage.removeItem("token")
+    if(token){
+      SetLogged(true)
+    }
+    else{
+      SetLogged(false)
+    }
+  },[]);
+  useEffect(()=>{
+    logged? 
+    Router.push("/Wordle"):
+    Router.push("/Login")
+  },[logged])
+  return (<></>)
 }
 
 export default Home
