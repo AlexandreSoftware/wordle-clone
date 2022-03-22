@@ -8,6 +8,7 @@ export default async function Auth(req:Request,res:Response,next){
     if(validateAuth(args)){
         let result = await redis.get(args.token)!
         if(result&&jwt.verify(args.token,config.secretkey)){
+            redis.expire(args.token,604800)
             next();
         }
         else{
