@@ -7,6 +7,9 @@
 .RightButton{
     margin-left: auto;
 }
+.Navbar{
+    z-index: 1;
+}
 .navbar_default svg{
     padding: 0%;
     width: 100%;

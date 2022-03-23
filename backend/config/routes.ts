@@ -6,7 +6,7 @@ import Auth from "../Api/Auth";
 import {VerifyAdmin,CheckForPermission} from "../Api/VerifyAdmin";
 module.exports=function live(app:ExpandedConnection){
     app.route("/login")
-        .get(Login)
+        .post(Login)
     app.route("/register")
         .put(Register)
     app.route("/user/:id")

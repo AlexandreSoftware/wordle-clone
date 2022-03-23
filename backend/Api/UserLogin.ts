@@ -10,6 +10,7 @@ export async function  Login(req:Request,res:Response){
     let redis :RedisClientType= req.app["redis"]; 
     let response = await db.findOne({UserName: req.body.UserName})
     if(response!=undefined&&response.Password!= undefined){
+        console.log(req.body.Password)
         if(bcrypt.compareSync(req.body.Password,response.Password.toString())){
             let token = jwt.sign({username:response.UserName,Id:response._id},config.secretkey)
             redis.set(token,response.UserName.toString())
@@ -17,10 +18,10 @@ export async function  Login(req:Request,res:Response){
             res.send(token)
         }
         else{
-            res.status(501).send("Error")
+            res.status(401).send("Error")
         }
     }
     else{
-        res.status(501).send("Error")
+        res.status(401).send("Error")
     }
 }

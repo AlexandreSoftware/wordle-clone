@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-type IColors={
+type ITheme={
   PrimaryColor:String,
   SecondaryColor:String
 }
-type IColorsContext = [IColors, React.Dispatch<React.SetStateAction<IColors>>];
+type IThemeContext = [ITheme, React.Dispatch<React.SetStateAction<ITheme>>];
 
-const ThemeContext = React.createContext<IColorsContext>([{PrimaryColor:"",SecondaryColor:""}, () => null])
+const ThemeContext = React.createContext<IThemeContext>([{PrimaryColor:"",SecondaryColor:""}, () => null])
 
 export default ThemeContext
 
 export const ThemeContextProvider = (props:any)=>{
-  const [colors, setColors] = useState<IColors>(
+  const [colors, setColors] = useState<ITheme>(
     {
       PrimaryColor:"dark",
       SecondaryColor:"white",

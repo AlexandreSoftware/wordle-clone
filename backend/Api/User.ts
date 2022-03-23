@@ -100,7 +100,7 @@ export async function UserPut(req:Request,res:Response){
             if(err){
                 console.log(err)
                 if(err.message.includes("duplicate key error collection:")&&err.message.includes("dup key: { UserName:")){
-                    res.status(501).send("ERROR:UserName Already Exists")
+                    res.status(401).send("ERROR:UserName Already Exists")
                 }
                 else{
                     res.status(500).send("ERROR")
@@ -147,7 +147,7 @@ export async function Register(req:Request,res:Response){
             if(err){
                 console.log(err)
                 if(err.message.includes("duplicate key error collection:")&&err.message.includes("dup key: { UserName:")){
-                    res.status(501).send("ERROR:UserName Already Exists")
+                    res.status(4).send("ERROR:UserName Already Exists")
                 }
                 else{
                     res.status(500).send("ERROR")
