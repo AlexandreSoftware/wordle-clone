@@ -7,11 +7,11 @@
 .RightButton{
     margin-left: auto;
 }
-.navbar_default{
-    border-color: white!important;
-}
 .navbar_default svg{
     padding: 0%;
     width: 100%;
     height: 50%;
+}
+.formattedbutton:checked{
+    border:10px solid red;
 }
