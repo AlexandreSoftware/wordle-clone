@@ -11,7 +11,7 @@ export async function VerifyAdmin(req:Request,res:Response,next){
     if(validateAdminProps(props)){
         const token = props.token;
         let decriptedToken = jwt.decode(token)!;
-        let data = await db.findOne<WordleUser>(decriptedToken["id"]);
+        let data = await db.findOne<WordleUser>(decriptedToken["id"]).clone();
         if(data?.Admin){
             next()
         }

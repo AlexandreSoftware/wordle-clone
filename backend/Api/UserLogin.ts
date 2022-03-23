@@ -8,9 +8,8 @@ let config = require("../config/config")
 export async function  Login(req:Request,res:Response){
     let db : mongo.Model<WordleUser> = req.app["db"]; 
     let redis :RedisClientType= req.app["redis"]; 
-    let response = await db.findOne({UserName: req.body.UserName})
+    let response = await db.findOne({UserName: req.body.UserName}).clone()
     if(response!=undefined&&response.Password!= undefined){
-        console.log(req.body.Password)
         if(bcrypt.compareSync(req.body.Password,response.Password.toString())){
             let token = jwt.sign({username:response.UserName,Id:response._id},config.secretkey)
             redis.set(token,response.UserName.toString())
