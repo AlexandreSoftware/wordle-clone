@@ -1,9 +1,10 @@
-
 import WordleGameProps from "../model/WordleGameProps"
 import WordleLineModel from "../model/WordleLineModel";
 import WordleLine from "./WordleLine"
-
+import ThemeContext from "../utils/ThemeContext";
+import { useContext } from "react";
 export default function WordleGame(props:WordleGameProps) {
+    let [themeContext,SetThemeContext] = useContext(ThemeContext);
     function emptyLine(length:Number):WordleLineModel{
         let wordleLine :WordleLineModel = {
             line :[]
@@ -38,7 +39,7 @@ export default function WordleGame(props:WordleGameProps) {
     }
     return (
         <div className="h-100 d-flex flex-column justify-content-center align-items-center overflow-auto">
-            <div className="w-75 d-flex flex-column text-white bg-dark overflow-auto ">
+            <div className={`w-75 d-flex flex-column overflow-auto bg-${themeContext.PrimaryColor} text-white`}>
                 {
                     CreateGameArray()
                 }
