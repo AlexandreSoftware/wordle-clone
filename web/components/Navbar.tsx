@@ -34,12 +34,9 @@ export default function NavBar(){
             <FontAwesomeIcon width={50} height={30} icon={faBars} className={`text-${context.SecondaryColor}`}/>
         </Navbar.Toggle>
         <Navbar.Collapse id="navbar" >
-            <motion.div>
-                <Nav.Link  href="/" className={`${formattedbutton} bg-${context.SecondaryColor} text-${context.PrimaryColor} `}>Wordle</Nav.Link>
-            </motion.div>
-            <motion.div>
-                <Nav.Link  href="/" className={`${formattedbutton} bg-${context.SecondaryColor} text-${context.PrimaryColor} `} >Profiles</Nav.Link>
-            </motion.div>
+            <Nav.Link  href="/Wordle" className={`${formattedbutton} bg-${context.SecondaryColor} text-${context.PrimaryColor} `}>Wordle</Nav.Link>
+            <Nav.Link  href="/Profiles" className={`${formattedbutton} bg-${context.SecondaryColor} text-${context.PrimaryColor} `} >Profiles</Nav.Link>
+
             <Nav className={Styles.RightButton}>
             <Button className="my-2 my-2 py-0 px-3" variant={context.SecondaryColor=="dark"?"dark":"light"} onClick={invertColors}><FontAwesomeIcon icon={context.PrimaryColor=="dark"?faMoon:faSun} width={20} height={20} /></Button>
                 {tokenContext==""?
