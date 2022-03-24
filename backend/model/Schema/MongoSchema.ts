@@ -15,7 +15,12 @@ export default new Schema<WordleUser>({
             MaxTries:Number,
             Finished:Boolean,
             WrongTries:[{
-                type: String,
+                word:[{
+                    letter:String,
+                    correct:Number,
+                    _id:false
+                }],
+                _id:false
               }],
 
         }

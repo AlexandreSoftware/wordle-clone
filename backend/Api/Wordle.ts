@@ -4,12 +4,13 @@ import {GetWords,ValidateWord} from "../utils/DictionaryApi";
 import WordleUser from "../model/WordleUser";
 import Game from "../model/Game";
 import CorrectWord from "../model/CorrectWord"
+import WrongTry from "../model/WrongTry";
+import WrongLetter from "../model/WrongLetter";
 export async function WordleTryQuestion(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesGuess(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
-    let response = await db.findOne({UserName: req.body.UserName})
+    let response = await db.findOne({UserName: req.body.UserName}).clone()
     let game = response?.Games?.find(x=>+x._id==bodyvalues.Id);
-    console.log(game)
     if(game?.CorrectWord!= undefined){
         if(!game?.Finished){
             if(game.WrongTries.length<game.MaxTries){
@@ -21,9 +22,11 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
                             res.send([...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}))
                         }
                         else{
-                            game?.WrongTries.push(bodyvalues.Guess)
+                            
+                            let words :WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!)
+                            game?.WrongTries.push(words)
                             response?.save()
-                            res.send(SortWords(bodyvalues.Guess,game?.CorrectWord.name!))
+                            res.send(words)
                         }
                     }
                     else{
@@ -51,7 +54,7 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
 export async function InsertWordleGame(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesInsert(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
-    let response = await db.findOne({UserName: req.body.UserName})
+    let response = await db.findOne({UserName: req.body.UserName}).clone()
     if(response != null){
         const correctWord :CorrectWord= await GetWords(req.body.WordLength)
         let game :Game= { 
@@ -87,8 +90,8 @@ function GetDefaultValuesInsert(props){
 }
 function SortWords(phrase: String,correctPhrase:String){
     let unsortedPhrase= [...phrase];
-    let unsortedCorrectPhrase = [...correctPhrase];
-    return unsortedPhrase.map(char=>{
+    let unsortedCorrectPhrase= [...correctPhrase];
+    let word :WrongTry= { word:unsortedPhrase.map<WrongLetter>(char=>{
         if(unsortedCorrectPhrase.find(cchar=>cchar==char)){
             if(SameWordMatchingIndex(unsortedPhrase,unsortedCorrectPhrase)){
                 return { letter:char,correct:2};
@@ -96,7 +99,8 @@ function SortWords(phrase: String,correctPhrase:String){
             return { letter:char,correct:1};
         }
         return { letter:char,correct:0};
-    })
+    })}
+    return word
 }
 function SameWordMatchingIndex(phrase,correctPhrase){
     for(let c=0;c<phrase.length;c++){

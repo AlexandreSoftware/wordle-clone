@@ -1,12 +1,6 @@
+import WordleLineModel from "./WordleLineModel";
+
 export default interface WordleLineProps{
-    WordleGame:{
-        CorrectWord: {
-            name: String,
-            relation: String
-        },
-        WordLength: Number,
-        MaxTries: Number,
-        Finished: Boolean,
-        WrongTries: String[]
-    }   
+    word:WordleLineModel
+    length:Number
 }

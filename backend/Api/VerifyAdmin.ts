@@ -30,9 +30,9 @@ export async function CheckForPermission(req:Request,res:Response,next){
     if(validatePermissionProps(props)){
         const token = props.token;
         let decriptedToken = jwt.decode(token)!;
-        let data = await db.findOne<WordleUser>(x=>x._id == decriptedToken["id"]).clone();
+        let data = await db.findOne<WordleUser>({_id : decriptedToken["Id"]}).clone();
         if(props.id){
-            let comparedata = await db.findOne(x=>x._id==props.id)
+            let comparedata = await db.findOne({_id:props.id}).clone()
             if(data?.Admin||comparedata?._id ==data?._id ){
                 next();
             }
@@ -41,7 +41,7 @@ export async function CheckForPermission(req:Request,res:Response,next){
             }
         }
         else if(props.UserName){
-            let comparedata = await db.findOne(x=>x.UserName==props.UserName)
+            let comparedata = await db.findOne(x=>x.UserName==props.UserName).clone()
             if(comparedata?.Admin||comparedata?.UserName==data?.UserName){
                 next();
             }

@@ -1,3 +1,5 @@
+import WordleLineModel from "./WordleLineModel"
+
 export default interface WordleGameProps{
     WordleGame:{
         CorrectWord: {
@@ -7,6 +9,6 @@ export default interface WordleGameProps{
         WordLength: Number,
         MaxTries: Number,
         Finished: Boolean,
-        WrongTries: String[]
+        WrongTries: WordleLineModel[]
     }   
 }

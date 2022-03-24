@@ -11,7 +11,6 @@ export async function  Login(req:Request,res:Response){
     let response = await db.findOne({UserName: req.body.UserName}).clone()
     if(response!=undefined&&response.Password!= undefined){
         if(bcrypt.compareSync(req.body.Password,response.Password.toString())){
-            console.log(config.secretkey)
             let token = jwt.sign({username:response.UserName,Id:response._id},config.secretkey)
             redis.set(token,response.UserName.toString())
             redis.expire(token,604800)
