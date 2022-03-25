@@ -27,11 +27,14 @@ export default function NavBar(){
         GetToken(context,setContext)
     },[])
     return (
-    <Navbar bg={context.PrimaryColor.toString()} className={`${Styles.Navbar} border-bottom border-${context.SecondaryColor}`} expand="sm">
-        <Image src="/logo.svg" width={100} height={100} alt="Logo"/>
+    <Navbar 
+        bg={context.PrimaryColor.toString()}
+         className={`${Styles.Navbar} border-bottom border-${context.SecondaryColor} py-0`} 
+         expand="sm">
+        <Image src="/logo.svg" width={50} height={50} alt="Logo"/>
         <Navbar.Toggle aria-controls="navbar"
          className={`${Styles.navbar_default} border-${context.SecondaryColor}`}>
-            <FontAwesomeIcon width={50} height={30} icon={faBars} className={`text-${context.SecondaryColor}`}/>
+            <FontAwesomeIcon width={25} height={25} icon={faBars} className={`text-${context.SecondaryColor}`}/>
         </Navbar.Toggle>
         <Navbar.Collapse id="navbar" >
             <Nav.Link  href="/Wordle" className={`${formattedbutton} bg-${context.SecondaryColor} text-${context.PrimaryColor} `}>Wordle</Nav.Link>
