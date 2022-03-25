@@ -13,12 +13,14 @@ export default function app({Component,pageProps}:AppProps) {
                 <title>Wordle</title>
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <ThemeContextProvider >
-                <TokenContextProvider>
-                    <NavBarAndFooter>
-                        <Component {...pageProps} />
-                    </NavBarAndFooter>
-                </TokenContextProvider>
-            </ThemeContextProvider>
+            <div className="bg-dark">
+                <ThemeContextProvider >
+                    <TokenContextProvider>
+                        <NavBarAndFooter>
+                            <Component {...pageProps} />
+                        </NavBarAndFooter>
+                    </TokenContextProvider>
+                </ThemeContextProvider>
+            </div>
         </>)
 }

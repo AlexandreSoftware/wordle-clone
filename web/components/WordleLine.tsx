@@ -11,5 +11,7 @@ export default function WordleLine(props:WordleLineProps) {
                 <WordleNode node={{correct: props.word.line[i].correct,letter:props.word.line[i].letter}}/>
             )
         }
-    return(<div className="text-center w-100">{arr}</div>)
+    return(<div className="text-center w-100">
+        {arr}</div>
+        )
 }
