@@ -34,7 +34,7 @@ export default function Register(){
     }
     return(
         <div className={" h-100 d-flex justify-content-center align-items-center"}>
-            <motion.form initial={{y:-300}} animate={{y:0}} transition={{ease: "easeIn",duration: 0.8,}} onSubmit={handleSubmit} >
+            <motion.form initial={{x:"-100vw"}} animate={{x:0}} transition={{ease: "easeIn",duration: 0.8,type:"tween"}} onSubmit={handleSubmit} >
                 <Form.Group className={` border-secondary border-radius-20 rounded p-5 bg-${context.SecondaryColor=="dark"?"dark":"white"} text-${context.PrimaryColor} `}>
                     <h2>Register</h2>
                     <Form.Label>Username</Form.Label>

@@ -3,6 +3,7 @@ import WordleLineModel from "../model/WordleLineModel";
 import WordleLine from "./WordleLine"
 import ThemeContext from "../utils/ThemeContext";
 import { useContext } from "react";
+import { motion } from "framer-motion";
 export default function WordleGame(props:WordleGameProps) {
     let [themeContext,SetThemeContext] = useContext(ThemeContext);
     function emptyLine(length:Number):WordleLineModel{
@@ -23,23 +24,46 @@ export default function WordleGame(props:WordleGameProps) {
         })}
         return words
     }
+    function WordleLineVariantFactory(index:number){
+        let WordleLineVariant={
+            initial:{
+                x: index%2==0?"-100vw":"100vw"
+            },
+            animate:{
+                x:0,
+                transition:{
+                    duration:0.5,
+                    type:"Tween"
+                }
+            }
+        }
+        return WordleLineVariant
+    }
+    
     function CreateGameArray(){
         let arr :JSX.Element[]= []
-        for(let i =0;i< props.WordleGame.MaxTries;i++){
+        let i =0
+        for(;i< props.WordleGame.MaxTries;i++){
             if(props.WordleGame.WrongTries[i]){
-                arr.push(<WordleLine length={props.WordleGame.WordLength} word={props.WordleGame.WrongTries[i]}></WordleLine>)
+                arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
+                     <WordleLine length={props.WordleGame.WordLength} word={props.WordleGame.WrongTries[i]}></WordleLine>
+                    </motion.div>)
             }
             else{
-                arr.push(<WordleLine length={props.WordleGame.WordLength} word={emptyLine(props.WordleGame.WordLength)}></WordleLine>)
+                arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
+                            <WordleLine length={props.WordleGame.WordLength} word={emptyLine(props.WordleGame.WordLength)}></WordleLine>
+                        </motion.div>)
             }
 
         }
-        arr.push(<WordleLine length={props.WordleGame.WordLength} word={CorrectWord(props.WordleGame.CorrectWord.name)}></WordleLine>)
+        arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
+                 <WordleLine length={props.WordleGame.WordLength} word={CorrectWord(props.WordleGame.CorrectWord.name)}></WordleLine>
+                </motion.div>)
         return arr;
     }
     return (
-        <div className="h-100 d-flex flex-column justify-content-center align-items-center overflow-auto">
-            <div className={`w-75 d-flex flex-column overflow-auto bg-${themeContext.PrimaryColor} text-white`}>
+        <div className="h-100 d-flex flex-column justify-content-start align-items-center">
+            <div className={`w-75 d-flex flex-column  bg-${themeContext.PrimaryColor} text-white`}>
                 {
                     CreateGameArray()
                 }
