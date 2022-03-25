@@ -16,11 +16,30 @@ export default function NavBar() {
     let [tokenContext, setTokenContext] = useContext(TokenContext)
     let formattedbutton = "m-2 text-center rounded px-3"
     let [context, setContext] = useContext(ThemeContext)
+    useEffect(()=>{
+        const PrimaryColor =  localStorage.getItem("PrimaryColor")
+        const SecondaryColor = localStorage.getItem("SecondaryColor")
+        if(PrimaryColor&&SecondaryColor){
+            setContext({PrimaryColor,SecondaryColor})
+        }
+        else{
+            localStorage.setItem("PrimaryColor",""+context.PrimaryColor)
+            localStorage.setItem("SecondaryColor",""+context.SecondaryColor)
+        }
+
+    }
+    ,[])
     function invertColors() {
-        if (context.PrimaryColor == "white")
+        if (context.PrimaryColor == "white"){
+            localStorage.setItem("PrimaryColor",""+"dark")
+            localStorage.setItem("SecondaryColor",""+"white")
             setContext({ PrimaryColor: "dark", SecondaryColor: "white" })
-        else
+        }   
+        else{
+            localStorage.setItem("PrimaryColor",""+"white")
+            localStorage.setItem("SecondaryColor",""+"dark" )
             setContext({ PrimaryColor: "white", SecondaryColor: "dark" })
+        }
     }
     let linkvariant={
         hover:{boxShadow:"0 3px 10px rgb(0 0 0 / 0.2)"}
@@ -42,6 +61,8 @@ export default function NavBar() {
                 <motion.a variants={linkvariant} whileHover="hover" href="/Wordle" className={`${formattedbutton} bg-${context.SecondaryColor} text-${context.PrimaryColor} py-1 text-decoration-none `}>Wordle</motion.a>
                 <motion.a variants={linkvariant} whileHover="hover" href="/Profiles" className={`${formattedbutton} bg-${context.SecondaryColor} text-${context.PrimaryColor} py-1 text-decoration-none`} >Profiles</motion.a>
                 <Nav className={Styles.RightButton}>
+                    {//TODO: change this button, i think its ugly
+                    }
                     <Button className="my-2 my-2 py-0 px-3" variant={context.SecondaryColor == "dark" ? "dark" : "light"} onClick={invertColors}><FontAwesomeIcon icon={context.PrimaryColor == "dark" ? faMoon : faSun} width={20} height={20} /></Button>
                     {tokenContext == "" ?
                         <>
