@@ -1,5 +1,7 @@
 .Node{
-    height: 8vh;
-    width: 8vh;
-    margin: 2px;
+    height: 9vh;
+    width: 9vh;
+    font-size: 2.5em;
+    font-family: 'Clear Sans',Helvetica,Arial, sans-serif;
+    vertical-align: top;
 }

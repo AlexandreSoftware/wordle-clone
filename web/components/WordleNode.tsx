@@ -9,7 +9,10 @@ export default function WordleNode(props:WordleNodeModel) {
                     "warning":
                     "success"
             } border-secondary border border-secondary 
-             d-inline-flex align-items-center m-2 justify-content-center ${Styles.Node}`}>{props.node.letter==""?"":props.node.letter}</div>
+             d-inline-flex 
+             m-1 justify-content-center ${Styles.Node}`}>
+                 {props.node.letter==""?" ":props.node.letter}
+                 </div>
         
     )
 }

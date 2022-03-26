@@ -38,7 +38,7 @@ export default function Login(){
         
     }
     return (    
-        <div className={Styles.LoginScreen +" h-100 d-flex justify-content-center align-items-center"}>
+        <div className=" d-inline-flex justify-content-center align-items-center h-100 mt-5" >
             <motion.form initial={{x:"-100vw"}} animate={{x:0}} transition={{ease: "easeIn",duration: 0.8,type:"tween"}} onSubmit={handleSubmit} >
                 <Form.Group className={Styles.LoginForm +
                      ` border-secondary border-radius-20
