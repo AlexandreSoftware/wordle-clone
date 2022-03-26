@@ -2,3 +2,8 @@
     margin-top: auto;
     margin-bottom: 0;
 }
+@media screen and (height:100%) {
+    .footer{
+        margin:0
+    }    
+}

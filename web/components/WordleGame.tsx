@@ -10,6 +10,7 @@ export default function WordleGame(props:WordleGameProps) {
     let [themeContext,SetThemeContext] = useContext(ThemeContext);
     let [wordState,SetWordState] = useState("")
     let [game,SetGame] = useState([<></>]);
+    let [propsState,SetProps]= useState(props)
     function emptyLine(length:Number):WordleLineModel{
         let wordleLine :WordleLineModel = {
             line :[]
@@ -58,18 +59,18 @@ export default function WordleGame(props:WordleGameProps) {
         let i =0
         for(;i< input.WordleGame.MaxTries;i++){
             if(input.WordleGame.WrongTries[i]){
-                arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
+                arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
                      <WordleLine length={input.WordleGame.WordLength} word={input.WordleGame.WrongTries[i]}></WordleLine>
                     </motion.div>)
             }
             else if(input.WordleGame.CorrectWord.name!=""){
                 arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
-                            <WordleLine length={input.WordleGame.WordLength} word={(CorrectWord(input.WordleGame.CorrectWord.name))}></WordleLine>
+                            <WordleLine length={input.WordleGame.WordLength} word={(CorrectWord(input.WordleGame.CorrectWord.name))} key={i}></WordleLine>
                         </motion.div>)
             }   
             else{
                 arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
-                            <WordleLine length={input.WordleGame.WordLength} word={emptyLine(input.WordleGame.WordLength)}></WordleLine>
+                            <WordleLine length={input.WordleGame.WordLength} word={emptyLine(input.WordleGame.WordLength)} key={i}></WordleLine>
                         </motion.div>)
             }
 
@@ -85,22 +86,30 @@ export default function WordleGame(props:WordleGameProps) {
             SetWordState(wordState.slice(0, wordState.length - 1))
         }
         else if(input =='{enter}'){
-            SetGame(Guess(wordState))
+            Guess(wordState)
+            SetWordState("")
         }
         else if(wordState.length!=4){
             SetWordState(wordState+input)
         }
-        console.log(wordState)
+        
     }
     function Guess(word){
         //TODO: this is the money shot, this method calls the api and does the guess
-        return ([<></>])
+        propsState.WordleGame.WrongTries.push({
+            line:[
+                {correct:0,letter:word[0]},
+                {correct:0,letter:word[1]},
+                {correct:0,letter:word[2]},
+                {correct:0,letter:word[3]}
+            ]})
+        SetProps(propsState)
     }
     useEffect(()=>{
-        SetGame(CreateGameArray(props))
+        SetGame(CreateGameArray(propsState))
     },[])
     useEffect(()=>{
-        SetGame(CreateGameArray(props))
+        SetGame(CreateGameArray(propsState))
     },[wordState])
     return (
         <div className="h-100 d-flex flex-column justify-content-start align-items-center">

@@ -5,7 +5,7 @@ export default function Game(){
         <WordleGame WordleGame={
             {
                 CorrectWord:{
-                    name:"coat",
+                    name:"",
                     relation:"to test"
                 },
                 Finished:false,
