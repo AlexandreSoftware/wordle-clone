@@ -31,9 +31,10 @@ export async function CheckForPermission(req:Request,res:Response,next){
         const token = props.token;
         let decriptedToken = jwt.decode(token)!;
         let data = await db.findOne<WordleUser>({_id : decriptedToken["Id"]}).clone();
+
         if(props.id){
             let comparedata = await db.findOne({_id:props.id}).clone()
-            if(data?.Admin||comparedata?._id ==data?._id ){
+            if(data?.Admin||comparedata?.id ==data?._id ){
                 next();
             }
             else{

@@ -1,4 +1,4 @@
-import e, { Request,Response } from "express"
+import { Request,Response } from "express"
 import mongo from "mongoose";
 import {GetWords,ValidateWord} from "../utils/DictionaryApi";
 import WordleUser from "../model/WordleUser";
@@ -6,6 +6,7 @@ import Game from "../model/Game";
 import CorrectWord from "../model/CorrectWord"
 import WrongTry from "../model/WrongTry";
 import WrongLetter from "../model/WrongLetter";
+import { getDefaultSettings } from "http2";
 export async function WordleTryQuestion(req:Request,res:Response,next){
     let bodyvalues = GetDefaultValuesGuess(req.body)
     const db : mongo.Model<WordleUser> = req.app["db"]; 
@@ -19,14 +20,14 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
                         if(game?.CorrectWord.name == bodyvalues.Guess){
                             game.Finished=true
                             response?.save()
-                            res.send([...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}))
+                            res.json([...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}))
                         }
                         else{
                             
                             let words :WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!)
                             game?.WrongTries.push(words)
                             response?.save()
-                            res.send(words)
+                            res.json(words)
                         }
                     }
                     else{
@@ -73,6 +74,24 @@ export async function InsertWordleGame(req:Request,res:Response,next){
     else{
         res.status(401).send("ERROR")
     }
+}
+export async function GetWordleGame(req:Request,res:Response,next){    
+    const db : mongo.Model<WordleUser> = req.app["db"]; 
+    if(ValidateSearch(req.headers)&&req.headers!=undefined){
+        console.log(req.headers.id)
+        let result = await db.findOne({_id:req.headers.id})
+        let game = result?.Games?.find(x=>x._id==+req.headers.gameid!)
+        if(game&&!game?.Finished){
+            game.CorrectWord.name=""
+        }
+        res.status(400).json(game);
+    }
+    else{
+        res.status(401).send("ERROR: Invalid props")
+    }
+}
+function ValidateSearch(props){
+    return props && props.id && props.gameid
 }
 function GetDefaultValuesGuess(props){
     let newvalues= {Id:0,Guess:""};

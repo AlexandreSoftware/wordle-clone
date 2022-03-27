@@ -38,7 +38,7 @@ export async function UserGetId (req:Request,res:Response){
         {
             if(err){
                 console.log(err)
-                res.status(500).send("ERROR");
+                res.status(500).send("ERROR ");
             }
             if(obj != null){
                 let formatedGames= (obj.Games?.map((x:Game)=>{
