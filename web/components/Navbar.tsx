@@ -16,19 +16,7 @@ export default function NavBar() {
     let [tokenContext, setTokenContext] = useContext(TokenContext)
     let formattedbutton = "m-2 text-center rounded px-3"
     let [context, setContext] = useContext(ThemeContext)
-    useEffect(()=>{
-        const PrimaryColor =  localStorage.getItem("PrimaryColor")
-        const SecondaryColor = localStorage.getItem("SecondaryColor")
-        if(PrimaryColor&&SecondaryColor){
-            setContext({PrimaryColor,SecondaryColor})
-        }
-        else{
-            localStorage.setItem("PrimaryColor",""+context.PrimaryColor)
-            localStorage.setItem("SecondaryColor",""+context.SecondaryColor)
-        }
-
-    }
-    ,[])
+    
     function invertColors() {
         if (context.PrimaryColor == "white"){
             localStorage.setItem("PrimaryColor",""+"dark")
