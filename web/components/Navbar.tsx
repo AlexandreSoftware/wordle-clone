@@ -34,12 +34,9 @@ export default function NavBar() {
     let linkvariant={
         hover:{boxShadow:"0 3px 10px rgb(0 0 0 / 0.2)"}
     }
-<<<<<<< Updated upstream
     useEffect(() => {
         GetToken()
     }, [])
-=======
->>>>>>> Stashed changes
     return (
         <Navbar
             bg={context.PrimaryColor.toString()}

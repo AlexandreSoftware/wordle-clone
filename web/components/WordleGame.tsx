@@ -14,6 +14,7 @@ export default function WordleGame(props:WordleGameProps) {
     let [wordState,SetWordState] = useState("")
     let [game,SetGame] = useState([<Fragment key={"a"}></Fragment>]);
     let [propsState,SetProps]= useState(props)
+    let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
     function emptyLine(length:Number):WordleLineModel{
         let wordleLine :WordleLineModel = {
             line :[]
@@ -99,21 +100,35 @@ export default function WordleGame(props:WordleGameProps) {
             Guess(wordState)
             SetWordState("")
         }
-        else if(wordState.length!=4){
+        else if(wordState.length!=propsState.WordleGame.WordLength){
             SetWordState(wordState+input)
         }
         
     }
-    function Guess(word){
+    global.onkeydown = (event)=>{
+        console.log(event.key)
+        if(event.key=='Backspace')
+            SetKeyPress("{bksp}")
+        else if(event.key=="Enter"){
+            SetKeyPress("{enter}")
+        }
+        else if(alphabet.find(x=>x==event.key)){
+            SetKeyPress(event.key)
+        }
+    }
+    function Guess(word:String){
         //TODO: this is the money shot, this method calls the api and does the guess
-        propsState.WordleGame.WrongTries.push({
-            line:[
-                {correct:0,letter:word[0]},
-                {correct:0,letter:word[1]},
-                {correct:0,letter:word[2]},
-                {correct:0,letter:word[3]}
-            ]})
-        SetProps(propsState)
+        //TODO: implement notification if the word is not the correct length
+        if(word.length == propsState.WordleGame.MaxTries){
+            propsState.WordleGame.WrongTries.push({
+                line:word.split("").map(element => {
+                    return {letter:element,correct:0}
+                })});
+            SetProps(propsState)
+        }
+        else{
+            
+        }
     }
     useEffect(()=>{
         SetGame(CreateGameArray(propsState))
@@ -126,7 +141,7 @@ export default function WordleGame(props:WordleGameProps) {
         SetGame(CreateGameArray(props))
     },[props])
     return (
-        <div className="h-100 d-flex flex-column justify-content-start align-items-center">
+        <div className="h-100 d-flex flex-column justify-content-start align-items-center" >
             <div className={`w-75 d-flex flex-column  bg-${themeContext.PrimaryColor} text-white`}>
                 {game}
                 <Keyboard 

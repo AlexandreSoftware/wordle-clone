@@ -1,6 +1,6 @@
 export default interface WordleLineModel{
     line:{
-        letter:String,
-        correct:Number
+        letter:string,
+        correct:number
     }[]
 }

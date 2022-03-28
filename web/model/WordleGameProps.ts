@@ -3,11 +3,11 @@ import WordleLineModel from "./WordleLineModel"
 export default interface WordleGameProps{
     WordleGame:{
         CorrectWord: {
-            name: String,
-            relation: String
+            name: string,
+            relation: string
         },
-        WordLength: Number,
-        MaxTries: Number,
+        WordLength: number,
+        MaxTries: number,
         Finished: Boolean,
         WrongTries: WordleLineModel[]
     }   
