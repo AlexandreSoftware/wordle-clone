@@ -8,15 +8,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignJustify, faArrowRightFromBracket, faBars, faMoon, faPerson, faSun, faUser } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import ThemeContext from "../utils/ThemeContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
-import TokenContext from "../utils/TokenContext";
 import GetToken from "../utils/GetToken";
 export default function NavBar() {
-    let [tokenContext, setTokenContext] = useContext(TokenContext)
+
     let formattedbutton = "m-2 text-center rounded px-3"
     let [context, setContext] = useContext(ThemeContext)
-    
+    let [token,setToken] =useState<string>()
+    useEffect(()=>{
+        setToken(GetToken())
+    },[])
     function invertColors() {
         if (context.PrimaryColor == "white"){
             localStorage.setItem("PrimaryColor",""+"dark")
@@ -32,9 +34,12 @@ export default function NavBar() {
     let linkvariant={
         hover:{boxShadow:"0 3px 10px rgb(0 0 0 / 0.2)"}
     }
+<<<<<<< Updated upstream
     useEffect(() => {
         GetToken()
     }, [])
+=======
+>>>>>>> Stashed changes
     return (
         <Navbar
             bg={context.PrimaryColor.toString()}
@@ -52,7 +57,7 @@ export default function NavBar() {
                     {//TODO: change this button, i think its ugly
                     }
                     <Button className="my-2 my-2 py-0 px-3" variant={context.SecondaryColor == "dark" ? "dark" : "light"} onClick={invertColors}><FontAwesomeIcon icon={context.PrimaryColor == "dark" ? faMoon : faSun} width={20} height={20} /></Button>
-                    {tokenContext == "" ?
+                    {token == "" ?
                         <>
 
                             <motion.a variants={linkvariant} whileHover="hover" className={`${formattedbutton} text-white bg-primary py-1 text-decoration-none`} href="/Login">

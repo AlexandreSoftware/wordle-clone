@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { json } from "stream/consumers";
 import WordleGame from "../../components/WordleGame";
 import WordleGameProps from "../../model/WordleGameProps";
-import TokenContext from "../../utils/TokenContext";
 import LoadingGame from "../../components/LoadingGame"
 import GetToken from "../../utils/GetToken";
 export default  function Game(){    
@@ -24,6 +23,7 @@ export default  function Game(){
     
         
     }
+    
     useEffect(() => {
         let data = GetToken()
         setToken(data);

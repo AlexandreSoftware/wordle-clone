@@ -6,10 +6,8 @@ import ThemeContext from "../utils/ThemeContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { exit } from "process";
 import NavbarToggle from "./NavbarToggle";
-import TokenContext from "../utils/TokenContext";
 export default function NavBarAndFooter({...props}) {
     let [themeContext,setContext] = useContext(ThemeContext);
-    let [tokenContext,setTokenContext] = useContext(TokenContext)
     let [navbarToggle,SetNavbarToggle] = useState(true);
     useEffect(()=>{
         const PrimaryColor =  localStorage.getItem("PrimaryColor")
@@ -21,11 +19,6 @@ export default function NavBarAndFooter({...props}) {
             localStorage.setItem("PrimaryColor",""+themeContext.PrimaryColor)
             localStorage.setItem("SecondaryColor",""+themeContext.SecondaryColor)
         }
-        const token = localStorage.getItem("token")
-        if(token){
-            setTokenContext(token)
-        }
-
     }
     ,[])
     return (

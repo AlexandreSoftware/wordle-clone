@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from "react";
 import context from "react-bootstrap/esm/AccordionContext";
 import NavBarAndFooter from "../components/NavBarAndFooter";
 import { ThemeContextProvider } from "../utils/ThemeContext";
-import { TokenContextProvider } from "../utils/TokenContext";
 
 export default function app({Component,pageProps}:AppProps) {
         return(<>
@@ -15,11 +14,9 @@ export default function app({Component,pageProps}:AppProps) {
             </Head>
             <div className="bg-dark">
                 <ThemeContextProvider >
-                    <TokenContextProvider>
                         <NavBarAndFooter>
                             <Component {...pageProps} />
                         </NavBarAndFooter>
-                    </TokenContextProvider>
                 </ThemeContextProvider>
             </div>
         </>)

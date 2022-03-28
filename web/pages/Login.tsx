@@ -7,11 +7,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Router from 'next/router'
-import TokenContext from "../utils/TokenContext";
 export default function Login(){
     let [themeContext,setThemeContext] = useContext(ThemeContext)
-    let [tokenContext,setTokenContext] = useContext(TokenContext)
-
     let [username,SetUsername] = useState("");
     let [password,Setpassword] = useState("");
     function handleSubmit(e:any){
@@ -27,7 +24,6 @@ export default function Login(){
         }).then(obj=>
             {
                 localStorage.setItem("token",obj.data)
-                setTokenContext(obj.data);
                 Router.push("/")
             }
             ,err=>{
