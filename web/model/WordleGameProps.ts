@@ -10,6 +10,7 @@ export default interface WordleGameProps{
         MaxTries: number,
         Finished: Boolean,
         WrongTries: WordleLineModel[]
+        Won:boolean
     }   
     GameId:number,
     PlayerId:string

@@ -6,5 +6,7 @@ export default interface Game{
     WordLength:Number,
     MaxTries:Number,
     WrongTries:WrongTry[],
-    Finished:Boolean
+    Finished:Boolean,
+    Won:Boolean
+
 }

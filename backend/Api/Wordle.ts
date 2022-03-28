@@ -10,7 +10,6 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
     let bodyvalues = {...req.body}
     const db : mongo.Model<WordleUser> = req.app["db"]; 
     let response;
-    console.log(bodyvalues)
     if(bodyvalues.UserName){
         response = await db.findOne({UserName: bodyvalues.UserName}).clone()
     }
@@ -20,14 +19,22 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
 
     let game = response?.Games?.find(x=>+x._id==bodyvalues.gameid);
     if(game?.CorrectWord!= undefined){
-        if(!game?.Finished){
-            if(game.WrongTries.length<game.MaxTries){
-                if(ValidateWordLength(bodyvalues.Guess,game?.WordLength)){
+        if(!game?.Finished&&!game.Won){
+            if(game.WrongTries.length<=game.MaxTries){
+                if(ValidateWordLength(bodyvalues.Guess,game?.WordLength)){                   
                     if(await ValidateWord(bodyvalues.Guess)){
                         if(game?.CorrectWord.name == bodyvalues.Guess){
                             game.Finished=true
                             response?.save()
                             res.json([...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}))
+                        }
+                        else if(game?.WrongTries.length >= game?.MaxTries){
+                            console.log("passed")
+                            game.Finished=true;
+                            let words:WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!)
+                            game?.WrongTries.push(words)
+                            response?.save()
+                            res.json(words)
                         }
                         else{
                             
@@ -70,7 +77,8 @@ export async function InsertWordleGame(req:Request,res:Response,next){
             MaxTries : bodyvalues.MaxTries,
             WordLength : bodyvalues.WordLength,
             WrongTries : [],
-            Finished:false
+            Finished:false,
+            Won:false
         }
         response?.Games?.push(game);
         response?.save();
@@ -88,8 +96,15 @@ export async function GetWordleGame(req:Request,res:Response,next){
         let game = result?.Games?.find(x=>x._id==+req.headers.gameid!)
         if(game&&!game?.Finished){
             game.CorrectWord.name=""
+            res.json(game);
         }
-        res.json(game);
+        else if(game){
+            res.json(game);
+        }
+        else{
+            res.status(401).send("ERROR: Game not found")
+        }
+        
     }
     else{
         res.status(401).send("ERROR: Invalid props")

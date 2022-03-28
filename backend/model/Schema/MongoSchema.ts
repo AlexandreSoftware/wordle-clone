@@ -14,6 +14,7 @@ export default new Schema<WordleUser>({
             WordLength:Number,
             MaxTries:Number,
             Finished:Boolean,
+            Won:Boolean,
             WrongTries:[{
                 word:[{
                     letter:String,
