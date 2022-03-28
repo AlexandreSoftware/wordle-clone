@@ -6,10 +6,13 @@ import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
+import { json } from "stream/consumers";
+import { Fragment } from "react";
+import { randomInt } from "crypto";
 export default function WordleGame(props:WordleGameProps) {
     let [themeContext,SetThemeContext] = useContext(ThemeContext);
     let [wordState,SetWordState] = useState("")
-    let [game,SetGame] = useState([<></>]);
+    let [game,SetGame] = useState([<Fragment key={"a"}></Fragment>]);
     let [propsState,SetProps]= useState(props)
     function emptyLine(length:Number):WordleLineModel{
         let wordleLine :WordleLineModel = {
@@ -59,26 +62,33 @@ export default function WordleGame(props:WordleGameProps) {
         let i =0
         for(;i< input.WordleGame.MaxTries;i++){
             if(input.WordleGame.WrongTries[i]){
-                arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
-                     <WordleLine length={input.WordleGame.WordLength} word={input.WordleGame.WrongTries[i]}></WordleLine>
-                    </motion.div>)
+                arr.push(
+                        <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                            <WordleLine length={input.WordleGame.WordLength} word={input.WordleGame.WrongTries[i]}></WordleLine>
+                        </motion.div>
+                    )
             }
             else if(input.WordleGame.CorrectWord.name!=""){
-                arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
-                            <WordleLine length={input.WordleGame.WordLength} word={(CorrectWord(input.WordleGame.CorrectWord.name))} key={i}></WordleLine>
-                        </motion.div>)
+                arr.push(
+                        <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                            <WordleLine length={input.WordleGame.WordLength} word={(CorrectWord(input.WordleGame.CorrectWord.name))} ></WordleLine>
+                        </motion.div>
+                    )
             }   
             else{
-                arr.push(<motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
-                            <WordleLine length={input.WordleGame.WordLength} word={emptyLine(input.WordleGame.WordLength)} key={i}></WordleLine>
-                        </motion.div>)
+                arr.push(
+                        <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                            <WordleLine length={input.WordleGame.WordLength} word={emptyLine(input.WordleGame.WordLength)}></WordleLine>
+                        </motion.div>
+                    )
             }
 
         }
         arr.push(
-            <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block">
-                <WordleLine length={input.WordleGame.WordLength} word={GuessWord(wordState)} />
-            </motion.div>)
+                <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                    <WordleLine length={input.WordleGame.WordLength} word={GuessWord(wordState)}/>
+                </motion.div>
+            )
         return arr;
     }
     let SetKeyPress = (input) => {
@@ -111,14 +121,15 @@ export default function WordleGame(props:WordleGameProps) {
     useEffect(()=>{
         SetGame(CreateGameArray(propsState))
     },[wordState])
+    useEffect(()=>{
+        SetProps(props)
+        SetGame(CreateGameArray(props))
+    },[props])
     return (
         <div className="h-100 d-flex flex-column justify-content-start align-items-center">
             <div className={`w-75 d-flex flex-column  bg-${themeContext.PrimaryColor} text-white`}>
-                {
-                    game
-                }
-                    <Keyboard 
-                    
+                {game}
+                <Keyboard 
                     layout={{default : [
                             'q w e r t y u i o p {bksp}',
                              ' a s d f g h j k l {enter} ',

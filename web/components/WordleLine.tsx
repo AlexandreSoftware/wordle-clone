@@ -9,12 +9,12 @@ export default function WordleLine(props:WordleLineProps) {
         for(let i =0;i< +props.length;i++){
             if(props.word.line[i]){
                 arr.push(
-                    <WordleNode node={{correct: props.word.line[i].correct , letter:props.word.line[i].letter}}/>
+                    <WordleNode node={{correct: props.word.line[i].correct , letter:props.word.line[i].letter}} key={i}/>
                 )
             }
             else{
                 arr.push(
-                    <WordleNode node={{correct:0 , letter:" "}}/>
+                    <WordleNode node={{correct:0 , letter:" "}} key={i}/>
                 )
             }
         }

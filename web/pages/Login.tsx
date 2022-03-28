@@ -21,7 +21,6 @@ export default function Login(){
             Password:password
         }
         axios.post("http://localhost:8000/login",formjson,{
-            method:"GET",
             headers: {
                 'Content-Type': 'application/json'
               },

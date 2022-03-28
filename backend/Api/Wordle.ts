@@ -84,7 +84,7 @@ export async function GetWordleGame(req:Request,res:Response,next){
         if(game&&!game?.Finished){
             game.CorrectWord.name=""
         }
-        res.status(400).json(game);
+        res.json(game);
     }
     else{
         res.status(401).send("ERROR: Invalid props")
