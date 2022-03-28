@@ -5,7 +5,7 @@ import Router from "next/router";
 export default function Logout() {
     let [context,setContext] = useContext(ThemeContext)
     useEffect(()=>{
-            let token = GetToken(context,setContext)   
+            let token = GetToken()   
             if(token!=""){
                 localStorage.removeItem("token")
             }

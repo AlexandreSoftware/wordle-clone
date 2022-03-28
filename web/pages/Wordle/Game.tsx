@@ -5,12 +5,14 @@ import WordleGame from "../../components/WordleGame";
 import WordleGameProps from "../../model/WordleGameProps";
 import TokenContext from "../../utils/TokenContext";
 import LoadingGame from "../../components/LoadingGame"
+import GetToken from "../../utils/GetToken";
 export default  function Game(){    
     let [wordleData,wordleSetData] =useState<WordleGameProps>();
-    function getData(){
+    let [token,setToken] = useState<string>("")
+    function getGameData(){
         var config = {
             headers : { 
-              'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJsYWNrIGNvZmZlIiwiSWQiOiI2MjQwMjUwM2Q4Y2ZjNzQzNjMyMzUxNTAiLCJpYXQiOjE2NDgzNzA5NjF9.RKZVf1ZkAWFn0wYr6FT2nTvuuuRgG8JJxX1U0yA2F70', 
+              'token': token, 
               'gameId': '0', 
               'id': '62402503d8cfc74363235150'
             }
@@ -23,8 +25,14 @@ export default  function Game(){
         
     }
     useEffect(() => {
-        getData()
+        let data = GetToken()
+        setToken(data);
     }, [])
+    useEffect(()=>{
+        if(token){
+            getGameData()
+        }
+    },[token])
     
     return(
         <>

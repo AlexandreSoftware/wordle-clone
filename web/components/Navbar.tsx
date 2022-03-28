@@ -33,7 +33,7 @@ export default function NavBar() {
         hover:{boxShadow:"0 3px 10px rgb(0 0 0 / 0.2)"}
     }
     useEffect(() => {
-        GetToken(context, setContext)
+        GetToken()
     }, [])
     return (
         <Navbar
