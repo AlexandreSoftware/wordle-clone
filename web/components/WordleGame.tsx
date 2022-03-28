@@ -94,11 +94,19 @@ export default function WordleGame(props:WordleGameProps) {
                     )
             }
         }
-        if(input.WordleGame.Finished){
+        if(input.WordleGame.Finished&& input.WordleGame.Won){
             //TODO: Implement call for modal when game is finished
             arr.push(
                 <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
                     <WordleLine length={input.WordleGame.WordLength} word={CorrectWord(input.WordleGame.CorrectWord.name)}/>
+                </motion.div>
+            )
+        }
+        else if(input.WordleGame.Finished){
+            //TODO: Implement call for modal when game is finished
+            arr.push(
+                <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                    <WordleLine length={input.WordleGame.WordLength} word={input.WordleGame.WrongTries[i]}/>
                 </motion.div>
             )
         }
