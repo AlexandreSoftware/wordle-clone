@@ -4,50 +4,9 @@ import { json } from "stream/consumers";
 import WordleGame from "../../components/WordleGame";
 import WordleGameProps from "../../model/WordleGameProps";
 import TokenContext from "../../utils/TokenContext";
-
+import LoadingGame from "../../components/LoadingGame"
 export default  function Game(){    
-    let sampleData :WordleGameProps={
-        WordleGame: {
-             CorrectWord:{
-                name:"",
-                relation:"to test"
-            },
-            Finished:false,
-            MaxTries:5,
-            WordLength:4,
-            WrongTries:[
-                {
-                line:[
-                    {correct:0,letter:"b"},
-                    {correct:2,letter:"o"},
-                    {correct:2,letter:"a"},
-                    {correct:2,letter:"t"}
-                ]},
-                {
-                    line:[
-                    {correct:0,letter:"j"},
-                    {correct:2,letter:"o"},
-                    {correct:1,letter:"k"},
-                    {correct:0,letter:"e"}
-                ]},
-                {
-                    line:[
-                    {correct:0,letter:"l"},
-                    {correct:2,letter:"o"},
-                    {correct:2,letter:"a"},
-                    {correct:0,letter:"d"}
-                ]},
-                {
-                    line:[
-                    {correct:2,letter:"c"},
-                    {correct:2,letter:"o"},
-                    {correct:2,letter:"a"},
-                    {correct:2,letter:"t"}
-                ]},
-            ]
-        }
-    }
-    let [wordleData,wordleSetData] =useState(sampleData);
+    let [wordleData,wordleSetData] =useState<WordleGameProps>();
     function getData(){
         var config = {
             headers : { 
@@ -56,11 +15,11 @@ export default  function Game(){
               'id': '62402503d8cfc74363235150'
             }
           };
-
         axios.get('http://localhost:8000/wordle',config).then(data=>{
             let convertedData :WordleGameProps = {WordleGame:data.data}
             wordleSetData(convertedData);
         },()=>{})
+    
         
     }
     useEffect(() => {
@@ -69,7 +28,7 @@ export default  function Game(){
     
     return(
         <>
-            <WordleGame WordleGame={wordleData.WordleGame}/>
+            {wordleData?<WordleGame WordleGame={wordleData.WordleGame}/>:<LoadingGame/>}
         </>
     )
 }

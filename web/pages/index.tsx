@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import Router from 'next/router'
 const Home: NextPage = () => {
-  let [logged,SetLogged] = useState(false)
+  let [logged,SetLogged] = useState<boolean>()
   
   useEffect(()=>{
     let token = localStorage.getItem("token")
@@ -14,6 +14,7 @@ const Home: NextPage = () => {
       SetLogged(false)
     }
   },[]);
+
   useEffect(()=>{
     logged? 
     Router.push("/Wordle"):
