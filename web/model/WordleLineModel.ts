@@ -1,5 +1,5 @@
 export default interface WordleLineModel{
-    line:{
+    word:{
         letter:string,
         correct:number
     }[]

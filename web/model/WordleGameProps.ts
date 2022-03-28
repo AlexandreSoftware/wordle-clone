@@ -11,4 +11,7 @@ export default interface WordleGameProps{
         Finished: Boolean,
         WrongTries: WordleLineModel[]
     }   
+    GameId:number,
+    PlayerId:string
+
 }

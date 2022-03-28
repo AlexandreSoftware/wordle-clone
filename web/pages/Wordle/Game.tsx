@@ -8,22 +8,6 @@ import GetToken from "../../utils/GetToken";
 export default  function Game(){    
     let [wordleData,wordleSetData] =useState<WordleGameProps>();
     let [token,setToken] = useState<string>("")
-    function getGameData(){
-        var config = {
-            headers : { 
-              'token': token, 
-              'gameId': '0', 
-              'id': '62402503d8cfc74363235150'
-            }
-          };
-        axios.get('http://localhost:8000/wordle',config).then(data=>{
-            let convertedData :WordleGameProps = {WordleGame:data.data}
-            wordleSetData(convertedData);
-        },()=>{})
-    
-        
-    }
-    
     useEffect(() => {
         let data = GetToken()
         setToken(data);
@@ -33,10 +17,26 @@ export default  function Game(){
             getGameData()
         }
     },[token])
+    function getGameData(){
+        var config = {
+            headers : { 
+              'token': token, 
+              'gameId': '1', 
+              'id': '62402503d8cfc74363235150'
+            }
+          };
+        axios.get('http://localhost:8000/wordle',config).then(data=>{
+
+            let convertedData :WordleGameProps = {WordleGame:data.data,GameId:1,PlayerId:"62402503d8cfc74363235150"}
+            wordleSetData(convertedData);
+        },()=>{})
+    
+        
+    }
     
     return(
         <>
-            {wordleData?<WordleGame WordleGame={wordleData.WordleGame}/>:<LoadingGame/>}
+            {wordleData?<WordleGame WordleGame={wordleData.WordleGame} GameId={wordleData.GameId} PlayerId={wordleData.PlayerId}/>:<LoadingGame/>}
         </>
     )
 }
