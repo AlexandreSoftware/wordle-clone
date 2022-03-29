@@ -1,1 +1,1 @@
-#Wordle Clone
+#<center>Wordle Clone</center>
