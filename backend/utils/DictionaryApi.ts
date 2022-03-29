@@ -1,11 +1,15 @@
+import words from "./ReadJson";
 import WordsJson from "./ReadJson"
 export async function GetWords(length:number){
     const jsonresponse = await getRandomWordFromDictionary(length)
     return await jsonresponse;
 }
 async function getRandomWordFromDictionary(length:number){
-    const index = Math.floor(WordsJson.length * Math.random())
-    const word = WordsJson[index]
+    let word;
+    do{
+        const index = Math.floor(WordsJson.length * Math.random())
+        word = WordsJson[index]
+    }while(word.length!=length)
     return word;
 }
 export async function ValidateWord(word:string){
