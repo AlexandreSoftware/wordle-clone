@@ -1,1 +1,1 @@
-# <center>Wordle Clone</center>
+# <p align="center">Wordle Clone</p>
