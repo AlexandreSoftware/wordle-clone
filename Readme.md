@@ -9,7 +9,16 @@ Wordle Clone made with Nextjs + Express
   - [Backend](#backend)
 - [Getting Started](#getting-started)
   - [Docker](#docker)
+  - [WIP: dockerfiles and compose not implemented yet](#wip-dockerfiles-and-compose-not-implemented-yet)
   - [Windows/Linux/Mac](#windowslinuxmac)
+    - [Requirements](#requirements)
+      - [Frontend Requirements](#frontend-requirements)
+      - [Backend Requirements](#backend-requirements)
+    - [Quick Start](#quick-start)
+      - [Windows](#windows)
+      - [Linux](#linux)
+      - [MacOs](#macos)
+    - [Running the App](#running-the-app)
 
 ## Stack Used
 
@@ -17,26 +26,25 @@ Wordle Clone made with Nextjs + Express
 
 - Typescript <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-plain.svg">
 
-* React  <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
+- React  <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
 
-* NextJS <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original-wordmark.svg">
+- NextJS <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original-wordmark.svg">
 
-* FontAwesome <img style="vertical-align:middle;" width=30 height =30 src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/font-awesome.svg">
+- FontAwesome <img style="vertical-align:middle;" width=30 height =30 src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/font-awesome.svg">
 
-* Framer Motion <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/framer.svg">
+- Framer Motion <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/framer.svg">
 
 - Webpack <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/webpack/webpack-original.svg">
 
-
-* React-Simple-Keyboard
+- React-Simple-Keyboard
 
 ### Backend
 
-* Typescript <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-plain.svg">
+- Typescript <img style="vertical-align:middle" width=30 height =30 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-plain.svg">
 
-* Express <img style="vertical-align:middle" width=40 height =40 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg"/>
+- Express <img style="vertical-align:middle" width=40 height =40 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg"/>
 
-* MongoDB <img style="vertical-align:middle" width=40 height =40 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-plain.svg"/>
+- MongoDB <img style="vertical-align:middle" width=40 height =40 src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-plain.svg"/>
 
 ## Getting Started
 
@@ -45,7 +53,8 @@ Wordle Clone made with Nextjs + Express
 #### WIP: dockerfiles and compose not implemented yet
 
 To Execute, run
-> docker-compose up
+
+docker-compose up
 
 ### Windows/Linux/Mac
 
@@ -101,9 +110,14 @@ Follow this tutorial to install MongoDB
 
 ### Running the App
 
-> cd web
-> npm i
-> npm run build
-> npm run start
-> cd ../backend
-> npm start
+cd web
+
+npm i
+
+npm run build
+
+npm run start
+
+cd ../backend
+
+npm start
