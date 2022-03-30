@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { json } from "stream/consumers";
-import WordleGame from "../../components/WordleGame";
+import WordleGame from "../../components/WordleGame/WordleGame";
 import WordleGameProps from "../../model/WordleGameProps";
 import LoadingGame from "../../components/LoadingGame"
 import GetToken from "../../utils/GetToken";
