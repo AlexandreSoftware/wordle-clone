@@ -17,28 +17,30 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
         response = await db.findOne({_id: bodyvalues.id}).clone()
     }
 
-    let game = response?.Games?.find(x=>+x._id==bodyvalues.gameid);
+    let game : Game = response?.Games?.find(x=>+x._id==bodyvalues.gameid);
     if(game?.CorrectWord!= undefined){
         if(!game?.Finished&&!game.Won){
             if(game.WrongTries.length<=game.MaxTries){
-                if(ValidateWordLength(bodyvalues.Guess,game?.WordLength)){                   
+                if(ValidateWordLength(bodyvalues.Guess,+game?.WordLength)){                   
                     if(await ValidateWord(bodyvalues.Guess)){
                         if(game?.CorrectWord.name == bodyvalues.Guess){
                             game.Finished=true
                             response?.save()
-                            res.json([...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}))
+                            let result :WrongTry = {word:[...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}),finished:true,won:true} ;
+                            res.json(result)
                         }
                         else if(game?.WrongTries.length >= game?.MaxTries){
                             console.log("passed")
                             game.Finished=true;
-                            let words:WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!)
+                            game.Won=false
+                            let words:WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!,true)
                             game?.WrongTries.push(words)
                             response?.save()
                             res.json(words)
                         }
                         else{
                             
-                            let words :WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!)
+                            let words :WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!,false)
                             game?.WrongTries.push(words)
                             response?.save()
                             res.json(words)
@@ -121,7 +123,7 @@ function GetDefaultValuesInsert(props){
     newvalues.Id = props.Id ? props.Id: 0 ;
     return newvalues
 }
-function SortWords(phrase: String,correctPhrase:String){
+function SortWords(phrase: String,correctPhrase:String,finished:boolean){
     let unsortedPhrase= [...phrase];
     let unsortedCorrectPhrase= [...correctPhrase];
     let word :WrongTry= { word:unsortedPhrase.map<WrongLetter>(char=>{
@@ -132,7 +134,7 @@ function SortWords(phrase: String,correctPhrase:String){
             return { letter:char,correct:1};
         }
         return { letter:char,correct:0};
-    })}
+    }),finished,won:false}
     return word
 }
 function SameWordMatchingIndex(phrase,correctPhrase){
