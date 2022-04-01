@@ -11,12 +11,11 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
     const db : mongo.Model<WordleUser> = req.app["db"]; 
     let response;
     if(bodyvalues.UserName){
-        response = await db.findOne({UserName: bodyvalues.UserName}).clone()
+        response = await db.findOne({UserName: bodyvalues.UserName})
     }
     else if(bodyvalues.id){
-        response = await db.findOne({_id: bodyvalues.id}).clone()
+        response = await db.findOne({_id: bodyvalues.id})
     }
-
     let game : Game = response?.Games?.find(x=>+x._id==bodyvalues.gameid);
     if(game?.CorrectWord!= undefined){
         if(!game?.Finished&&!game.Won){
@@ -24,16 +23,18 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
                 if(ValidateWordLength(bodyvalues.Guess,+game?.WordLength)){                   
                     if(await ValidateWord(bodyvalues.Guess)){
                         if(game?.CorrectWord.name == bodyvalues.Guess){
-                            game.Finished=true
+                            game.Finished=true;
+                            game.Won=true;
                             response?.save()
-                            let result :WrongTry = {word:[...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}),finished:true,won:true} ;
+                            let result :WrongTry = {Word:[...game?.CorrectWord.name].map(x=>{return { letter:x,correct:2}}),Finished:true,Won:true} ;
                             res.json(result)
+                            console.log(result)
                         }
-                        else if(game?.WrongTries.length >= game?.MaxTries){
-                            console.log("passed")
+                        else if(game?.WrongTries.length+1 == game?.MaxTries){
                             game.Finished=true;
                             game.Won=false
                             let words:WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!,true)
+                            console.log(words)
                             game?.WrongTries.push(words)
                             response?.save()
                             res.json(words)
@@ -41,6 +42,7 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
                         else{
                             
                             let words :WrongTry= SortWords(bodyvalues.Guess,game?.CorrectWord.name!,false)
+                            console.log(words)
                             game?.WrongTries.push(words)
                             response?.save()
                             res.json(words)
@@ -68,9 +70,15 @@ export async function WordleTryQuestion(req:Request,res:Response,next){
 }
 
 export async function InsertWordleGame(req:Request,res:Response,next){
-    let bodyvalues = GetDefaultValuesInsert(req.body)
+    let bodyvalues = req.body;
     const db : mongo.Model<WordleUser> = req.app["db"]; 
-    let response = await db.findOne({UserName: bodyvalues.UserName}).clone()
+    let response;
+    if(bodyvalues.UserName){
+        response = await db.findOne({UserName: bodyvalues.UserName})
+    }
+    else{
+        response = await db.findOne({_id: bodyvalues.id})
+    }
     if(response != null){
         const correctWord :CorrectWord= await GetWords(bodyvalues.WordLength)
         let game :Game= { 
@@ -115,18 +123,10 @@ export async function GetWordleGame(req:Request,res:Response,next){
 function ValidateSearch(props){
     return props && props.id && props.gameid
 }
-function GetDefaultValuesInsert(props){
-    let newvalues= {WordLength:0,UserName:"",MaxTries:0,Id:0};
-    newvalues.WordLength = props.WordLength ? props.WordLength: 5 ;
-    newvalues.UserName = props.UserName ? props.UserName : "test"; 
-    newvalues.MaxTries = props.MaxTries ? props.MaxTries : 5; 
-    newvalues.Id = props.Id ? props.Id: 0 ;
-    return newvalues
-}
-function SortWords(phrase: String,correctPhrase:String,finished:boolean){
+function SortWords(phrase: String,correctPhrase:String,Finished:boolean){
     let unsortedPhrase= [...phrase];
     let unsortedCorrectPhrase= [...correctPhrase];
-    let word :WrongTry= { word:unsortedPhrase.map<WrongLetter>(char=>{
+    let word :WrongTry= { Word:unsortedPhrase.map<WrongLetter>(char=>{
         if(unsortedCorrectPhrase.find(cchar=>cchar==char)){
             if(SameWordMatchingIndex(unsortedPhrase,unsortedCorrectPhrase)){
                 return { letter:char,correct:2};
@@ -134,7 +134,7 @@ function SortWords(phrase: String,correctPhrase:String,finished:boolean){
             return { letter:char,correct:1};
         }
         return { letter:char,correct:0};
-    }),finished,won:false}
+    }),Finished,Won:false}
     return word
 }
 function SameWordMatchingIndex(phrase,correctPhrase){

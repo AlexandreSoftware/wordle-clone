@@ -1,7 +1,7 @@
 import WrongLetter from "./WrongLetter";
 
 export default interface WrongTry{
-    word:WrongLetter[]
-    finished :boolean,
-    won:Boolean;
+    Word:WrongLetter[]
+    Finished :boolean,
+    Won:Boolean;
 }

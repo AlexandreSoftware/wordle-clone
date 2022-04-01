@@ -16,7 +16,7 @@ export default new Schema<WordleUser>({
             Finished:Boolean,
             Won:Boolean,
             WrongTries:[{
-                word:[{
+                Word:[{
                     letter:String,
                     correct:Number,
                     _id:false

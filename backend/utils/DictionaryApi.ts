@@ -9,7 +9,7 @@ async function getRandomWordFromDictionary(length:number){
     do{
         const index = Math.floor(WordsJson.length * Math.random())
         word = WordsJson[index]
-    }while(word.length!=length)
+    }while(word.name.length!=length)
     return word;
 }
 export async function ValidateWord(word:string){
