@@ -26,31 +26,40 @@ export function GenerateKeyboard(SetKeyPress:Function){
 
 export function emptyLine(length:Number):WordleLineModel{
     let wordleLine :WordleLineModel = {
-        word :[]
+        Word :[]
     }
     for(let i=0;i<length;i++){
-        wordleLine.word.push({correct:0,letter:""})
+        wordleLine.Word.push({correct:0,letter:""})
     }
     return wordleLine;
 }
-export function CorrectWord(word:String){
-    let chararray = word.split("")
-    let words :WordleLineModel={word: chararray.map(x=>{
-        let word = {letter:x,
+export function CorrectWord(word:string,length:number){
+    let chararray = convertToLineModel(word,length);
+    let words :WordleLineModel={Word: chararray.map(x=>{
+        let word = {letter:x==""?"":x,
             correct:2}
         return word
     })}
     return words
 }
-export function GuessWord(word:String){
-    let chararray = word.split("")
-    let words :WordleLineModel={word: chararray.map(x=>{
-        let word = {letter:x,
+export function GuessWord(word:string,length:number){
+    let chararray = convertToLineModel(word,length);
+    let words :WordleLineModel={Word: chararray.map(x=>{
+        let word = {letter:x==""?"":x,
             correct:0}
-        return word
-    })}
-    return words
+            return word
+        })}
+        return words
+    }
+function convertToLineModel(word:string,length:number){
+    let chararray = word.split("")
+    let res:string[]=[];
+    for(let i =0;i<length;i++){
+        res.push(word[i] ? word[i]:"");
+    }
+    return chararray
 }
+
 export function WordleLineVariantFactory(index:number){
     let WordleLineVariant={
         initial:{
@@ -67,61 +76,42 @@ export function WordleLineVariantFactory(index:number){
     return WordleLineVariant
 }
 
-export function CreateGameArray(input:WordleGameProps,wordState){
+export function CreateGameArray(input:WordleGameProps,wordState:string){
     let arr :JSX.Element[]= []
-    let i =0
-    for(;i<input.WordleGame.MaxTries-1;i++){
-        if(input.WordleGame.WrongTries[i]){
+    let correctawnserDrawn:boolean=false;
+    for(let i =0;i<input.WordleGame.MaxTries;i++){
+        console.log(!!input.WordleGame.WrongTries[i])
+        if(!!input.WordleGame.WrongTries[i]){
             arr.push(
                     <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inword-block" key={i}>
                         <WordleLine length={input.WordleGame.WordLength} word={input.WordleGame.WrongTries[i]}></WordleLine>
                     </motion.div>
                 )
         }
-        else if(input.WordleGame.CorrectWord.name!=""&&input.WordleGame.MaxTries==i){
+        else if(input.WordleGame.Finished&& input.WordleGame.Won&&!correctawnserDrawn){
+            //TODO: Implement call for modal when game is finished
             arr.push(
-                    <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inword-block" key={i}>
-                        <WordleLine length={input.WordleGame.WordLength} word={(CorrectWord(input.WordleGame.CorrectWord.name))} ></WordleLine>
+                    <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                        <WordleLine length={input.WordleGame.WordLength} word={CorrectWord(input.WordleGame.CorrectWord.name,length)}/>
                     </motion.div>
                 )
-        }   
+            correctawnserDrawn=true
+        }
+        else if(i==input.WordleGame.MaxTries-1&&!input.WordleGame.Finished){
+            arr.push(
+                <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                    <WordleLine length={input.WordleGame.WordLength} word={GuessWord(wordState,length)}/>
+                </motion.div>
+            )
+        }
         else{
             arr.push(
                     <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inword-block" key={i}>
                         <WordleLine length={input.WordleGame.WordLength} word={emptyLine(input.WordleGame.WordLength)}></WordleLine>
                     </motion.div>
                 )
-        }
+        }       
     }
-    if(input.WordleGame.Finished&& input.WordleGame.Won){
-        //TODO: Implement call for modal when game is finished
-        arr.push(
-            <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
-                <WordleLine length={input.WordleGame.WordLength} word={CorrectWord(input.WordleGame.CorrectWord.name)}/>
-            </motion.div>
-        )
-    }
-    else if(input.WordleGame.Finished&&input.WordleGame.WrongTries[i]){
-        //TODO: Implement call for modal when game is finished
-        arr.push(
-            <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
-                <WordleLine length={input.WordleGame.WordLength} word={input.WordleGame.WrongTries[i]}/>
-            </motion.div>
-        )
-    }
-    else if(input.WordleGame.Finished){
-        arr.push(
-            <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
-                <WordleLine length={input.WordleGame.WordLength} word={emptyLine(input.WordleGame.WordLength)}/>
-            </motion.div>
-        )
-    }
-    else{
-        arr.push(
-            <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
-                <WordleLine length={input.WordleGame.WordLength} word={GuessWord(wordState)}/>
-            </motion.div>
-        )
-    }
+
     return arr;
 }

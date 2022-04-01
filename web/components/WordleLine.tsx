@@ -7,9 +7,9 @@ export default function WordleLine(props:WordleLineProps) {
     
     let arr :JSX.Element[]= []
         for(let i =0;i<props.length;i++){
-            if(props.word.word&&props.word.word[i]){
+            if(props.word.Word&&props.word.Word[i]){
                 arr.push(
-                    <WordleNode node={{correct: props.word.word[i].correct , letter:props.word.word[i].letter}} key={i}/>
+                    <WordleNode node={{correct: props.word.Word[i].correct , letter:props.word.Word[i].letter}} key={i}/>
                 )
             }
             else{

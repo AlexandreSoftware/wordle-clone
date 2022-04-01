@@ -68,7 +68,7 @@ export default function WordleGame(props:WordleGameProps) {
     }
     function pushSkeleton(word:string){
         propsState.WordleGame.WrongTries.push({
-            word:word.split("").map(element => {
+            Word:word.split("").map(element => {
                 return {letter:element,correct:0}
             })});
 
@@ -92,7 +92,7 @@ export default function WordleGame(props:WordleGameProps) {
                         }
                         else{
                             //TODO:Get the correct word and call the modal for failure 
-                            propsState.WordleGame.WrongTries.push({word:convertedres.word})
+                            propsState.WordleGame.WrongTries.push({Word:convertedres.word})
                             propsState.WordleGame.CorrectWord.name="WRONG AWNSER, GAME FINISHED"
                             props.getGameData()
                         }
@@ -100,7 +100,7 @@ export default function WordleGame(props:WordleGameProps) {
                         propsState.WordleGame.Finished = true
                     }
                     else{
-                        propsState.WordleGame.WrongTries.push({word:convertedres.word})
+                        propsState.WordleGame.WrongTries.push({Word:convertedres.word})
                     }
                     SetWordState("")
                 }       
