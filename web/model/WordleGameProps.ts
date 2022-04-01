@@ -14,5 +14,5 @@ export default interface WordleGameProps{
     }   
     GameId:number,
     PlayerId:string
-
+    getGameData:Function
 }

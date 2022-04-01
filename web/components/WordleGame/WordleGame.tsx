@@ -12,13 +12,13 @@ import { randomInt } from "crypto";
 import axios from "axios";
 import GetToken from "../../utils/GetToken";
 import GuessResponse from "../../model/GuessResponse";
-import { CreateGameArray,GenerateKeyboard } from "./WordleGameDraw";
+import { CreateGameArray,GenerateKeyboard, GuessWord } from "./WordleGameDraw";
 export default function WordleGame(props:WordleGameProps) {
     let [wordState,SetWordState] = useState("")
     let [game,SetGame] = useState([<Fragment key={"a"}></Fragment>]);
     let [propsState,SetProps]= useState(props)
     let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-    let [token,setToken] = useState<string>("")
+    let [token,setToken] = useState<string>()
     let [themeContext,SetThemeContext] = useContext(ThemeContext);
 
     useEffect(() => {
@@ -34,7 +34,9 @@ export default function WordleGame(props:WordleGameProps) {
             Guess(wordState)
             SetWordState("")
         }
-        else if(wordState.length!=propsState.WordleGame.WordLength){
+        else if(wordState.length!=propsState.WordleGame.WordLength&&input !='{enter}'){
+            console.log("passed")
+            console.log(wordState+input)
             SetWordState(wordState+input)
         }
         
@@ -50,12 +52,8 @@ export default function WordleGame(props:WordleGameProps) {
         }
     }
     //i wish i just used reduce but typescript didnt think reduce to boolean would be apropriate, my head hurts, this is  the easier solution
-    let isCorrectWord = (word:GuessResponse)=>{
-        let val :boolean=true;
-        for (let x=0;x<word.word.length;x++){
-            val=word.word[x].correct==2&&val
-        }
-        return val;
+    let isFinished = (word:GuessResponse)=>{
+        return word.finished;
     }
     async function GuessRequest(guess:string){
         var config = { 
@@ -64,7 +62,6 @@ export default function WordleGame(props:WordleGameProps) {
             "id":props.PlayerId,
             "Guess":guess
           };
-          console.log(guess)
         return await axios.post('http://localhost:8000/wordle/guess',config)
     
         
@@ -82,48 +79,61 @@ export default function WordleGame(props:WordleGameProps) {
         if(word.length == propsState.WordleGame.WordLength){
             pushSkeleton(word)
             SetProps(propsState)
+            SetGame(game)
             try{
                 let result = await GuessRequest(word)
                 if(result.data &&result.data.word){
                     let convertedres : GuessResponse = result.data
                     propsState.WordleGame.WrongTries.pop()
-                    if(isCorrectWord(convertedres)){
-                        propsState.WordleGame.CorrectWord.name=word
+                    console.log(propsState)
+                    if(isFinished(convertedres)){
+                        if(convertedres.won){
+                            propsState.WordleGame.CorrectWord.name=word
+                        }
+                        else{
+                            //TODO:Get the correct word and call the modal for failure 
+                            propsState.WordleGame.WrongTries.push({word:convertedres.word})
+                            propsState.WordleGame.CorrectWord.name="WRONG AWNSER, GAME FINISHED"
+                            props.getGameData()
+                        }
+                        propsState.WordleGame.Won=propsState.WordleGame.Won
+                        propsState.WordleGame.Finished = true
                     }
                     else{
                         propsState.WordleGame.WrongTries.push({word:convertedres.word})
                     }
-                }
-
+                    SetWordState("")
+                }       
+                SetProps(propsState)
+                SetGame(CreateGameArray(props,""))
             }
             catch(e){
                 propsState.WordleGame.WrongTries.pop()
                 console.log(e)
             }
-            SetProps(propsState)
-            //for some reason settingprops is not updating state, this should update state accordingly
-            SetWordState(wordState)
         }
         else{
-            
+            //TODO: call the modal for the wrong question and get any other errors            
         }
+        
     }
     useEffect(()=>{
-        SetGame(CreateGameArray(props,wordState))
-    },[])
-    useEffect(()=>{
+        console.log("words")
+        console.log(wordState)
         SetGame(CreateGameArray(propsState,wordState))
     },[wordState])
     useEffect(()=>{
         SetGame(CreateGameArray(propsState,wordState))
     },[propsState])
     useEffect(()=>{
-        SetProps(props)
         SetGame(CreateGameArray(props,wordState))
+        SetProps(props)
     },[props])
     return (
         <div className="h-100 d-flex flex-column justify-content-start align-items-center" >
             <div className={`w-75 d-flex flex-column  bg-${themeContext.PrimaryColor} text-white`}>
+                {propsState.WordleGame.CorrectWord.name}
+                <h1 className="text-center">{propsState.WordleGame.CorrectWord.relation}</h1>
                 {game}
                 {GenerateKeyboard(SetKeyPress)}
             </div>

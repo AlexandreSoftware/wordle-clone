@@ -1,3 +1,4 @@
+import { INSPECT_MAX_BYTES } from "buffer";
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import Keyboard from "react-simple-keyboard";
@@ -30,7 +31,6 @@ export function emptyLine(length:Number):WordleLineModel{
     for(let i=0;i<length;i++){
         wordleLine.word.push({correct:0,letter:""})
     }
-    console.log(wordleLine)
     return wordleLine;
 }
 export function CorrectWord(word:String){
@@ -79,7 +79,6 @@ export function CreateGameArray(input:WordleGameProps,wordState){
                 )
         }
         else if(input.WordleGame.CorrectWord.name!=""&&input.WordleGame.MaxTries==i){
-            console.log(i)
             arr.push(
                     <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inword-block" key={i}>
                         <WordleLine length={input.WordleGame.WordLength} word={(CorrectWord(input.WordleGame.CorrectWord.name))} ></WordleLine>
@@ -102,11 +101,18 @@ export function CreateGameArray(input:WordleGameProps,wordState){
             </motion.div>
         )
     }
-    else if(input.WordleGame.Finished){
+    else if(input.WordleGame.Finished&&input.WordleGame.WrongTries[i]){
         //TODO: Implement call for modal when game is finished
         arr.push(
             <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
                 <WordleLine length={input.WordleGame.WordLength} word={input.WordleGame.WrongTries[i]}/>
+            </motion.div>
+        )
+    }
+    else if(input.WordleGame.Finished){
+        arr.push(
+            <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
+                <WordleLine length={input.WordleGame.WordLength} word={emptyLine(input.WordleGame.WordLength)}/>
             </motion.div>
         )
     }

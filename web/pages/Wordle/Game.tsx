@@ -21,13 +21,13 @@ export default  function Game(){
         var config = {
             headers : { 
               'token': token, 
-              'gameId': '1', 
+              'gameId': 9, 
               'id': '6241e9c326739ea4a115c72d'
             }
           };
         axios.get('http://localhost:8000/wordle',config).then(data=>{
 
-            let convertedData :WordleGameProps = {WordleGame:data.data,GameId:1,PlayerId:"6241e9c326739ea4a115c72d"}
+            let convertedData :WordleGameProps = {WordleGame:data.data,GameId:9,PlayerId:"6241e9c326739ea4a115c72d",getGameData:getGameData}
             wordleSetData(convertedData);
         },()=>{})
     
@@ -36,7 +36,7 @@ export default  function Game(){
     
     return(
         <>
-            {wordleData?<WordleGame WordleGame={wordleData.WordleGame} GameId={wordleData.GameId} PlayerId={wordleData.PlayerId}/>:<LoadingGame/>}
+            {wordleData?<WordleGame WordleGame={wordleData.WordleGame} GameId={wordleData.GameId} PlayerId={wordleData.PlayerId} getGameData={getGameData}/>:<LoadingGame/>}
         </>
     )
 }
