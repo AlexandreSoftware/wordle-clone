@@ -21,13 +21,13 @@ export default  function Game(){
         var config = {
             headers : { 
               'token': token, 
-              'gameId': 12, 
+              'gameId': 13, 
               'id': '6241e9c326739ea4a115c72d'
             }
           };
         axios.get('http://localhost:8000/wordle',config).then(data=>{
 
-            let convertedData :WordleGameProps = {WordleGame:data.data,GameId:12,PlayerId:"6241e9c326739ea4a115c72d",getGameData:getGameData}
+            let convertedData :WordleGameProps = {WordleGame:data.data,GameId:13,PlayerId:"6241e9c326739ea4a115c72d",getGameData:getGameData}
             wordleSetData(convertedData);
         },()=>{})
     
