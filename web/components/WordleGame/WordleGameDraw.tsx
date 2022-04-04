@@ -92,15 +92,16 @@ export function CreateGameArray(input:WordleGameProps,wordState:string){
             //TODO: Implement call for modal when game is finished
             arr.push(
                     <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
-                        <WordleLine length={input.WordleGame.WordLength} word={CorrectWord(input.WordleGame.CorrectWord.name,length)}/>
+                        <WordleLine length={input.WordleGame.WordLength} word={CorrectWord(input.WordleGame.CorrectWord.name,input.WordleGame.WordLength)}/>
                     </motion.div>
                 )
             correctawnserDrawn=true
         }
         else if(i==input.WordleGame.MaxTries-1&&!input.WordleGame.Finished){
+            
             arr.push(
                 <motion.div variants={WordleLineVariantFactory(i)} initial="initial" animate="animate" className="d-inline-block" key={i}>
-                    <WordleLine length={input.WordleGame.WordLength} word={GuessWord(wordState,length)}/>
+                    <WordleLine length={input.WordleGame.WordLength} word={GuessWord(wordState,input.WordleGame.WordLength)}/>
                 </motion.div>
             )
         }

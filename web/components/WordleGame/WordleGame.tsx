@@ -131,7 +131,7 @@ export default function WordleGame(props:WordleGameProps) {
     },[props])
     return (
         <div className="h-100 d-flex flex-column justify-content-start align-items-center" >
-            <div className={`w-75 d-flex flex-column  bg-${themeContext.PrimaryColor} text-white`}>
+            <div className={`w-75 d-flex flex-column  text-white`}>
                 <h1 className={`text-center text-${themeContext.SecondaryColor}`}>{propsState.WordleGame.CorrectWord.relation}</h1>
                 {game}
                 {GenerateKeyboard(SetKeyPress)}
