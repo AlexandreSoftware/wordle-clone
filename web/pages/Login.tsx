@@ -37,18 +37,15 @@ export default function Login(){
     }
     return (    
         <div className=" d-inline-flex justify-content-center align-items-center h-100 w-100" >
-            <div className=" d-inline-flex justify-content-center align-items-center h-100 mt-5" >
-                <motion.div className="bg-warning d-block overflow-hidden">
+            <div className=" d-inline-flex justify-content-center align-items-center h-25">
+                <motion.div className={`bg-warning overflow ${Styles.mockgame}`}>
                     {CreateGameArray(
                         WordleSampleGame,"")}
                 </motion.div>
-                <motion.form initial={{x:"-100vw"}} animate={{x:0}} transition={{ease: "easeIn",duration: 0.8,type:"tween"}} onSubmit={handleSubmit} >
-                    <Form.Group className={Styles.LoginForm +
-                        ` border-secondary border-radius-20
-                        rounded p-5 bg-${themeContext.SecondaryColor=="dark"?"dark":"white"} 
-                        text-${themeContext.PrimaryColor} `}
-                        >
-
+                <motion.form initial={{x:"-100vw"}} animate={{x:0}} transition={{ease: "easeIn",duration: 0.8,type:"tween"}} onSubmit={handleSubmit} className={Styles.loginform +` border-secondary border-radius-20 d-flex justify-content-center
+                        rounded bg-${themeContext.SecondaryColor=="dark"?"dark":"white"} 
+                        text-${themeContext.PrimaryColor} `}>
+                    <Form.Group className={Styles.LoginForm}>
                         <h2>Login</h2>
                         <Form.Label>Username</Form.Label>
                         <Form.Control value={username}

@@ -1,0 +1,17 @@
+.mockgame{
+    position: absolute;
+    width: 60vh;
+    border-radius: 5%;
+    left: 10%;
+    overflow: hidden;
+    z-index: 1;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.loginform{
+ z-index: 2;   
+ height: 70vh;
+ width: 80vh;
+}
