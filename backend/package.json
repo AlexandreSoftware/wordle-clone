@@ -10,7 +10,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "nodemon",
-    "test": "jest"
+    "test": "jest --watchAll --verbose"
   },
   "author": "",
   "license": "MIT",
@@ -26,6 +26,7 @@
     "consign": "^0.1.6",
     "cors": "^2.8.5",
     "express": "^4.17.2",
+    "jest": "^27.5.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
     "redis": "^4.0.4",
