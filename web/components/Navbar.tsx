@@ -16,9 +16,7 @@ export default function NavBar() {
     let formattedbutton = "m-2 text-center rounded px-3"
     let [context, setContext] = useContext(ThemeContext)
     let [token,setToken] =useState<string>()
-    useEffect(()=>{
-        setToken(GetToken())
-    },[])
+    
     function invertColors() {
         if (context.PrimaryColor == "white"){
             localStorage.setItem("PrimaryColor",""+"dark")
@@ -34,9 +32,6 @@ export default function NavBar() {
     let linkvariant={
         hover:{boxShadow:"0 3px 10px rgb(0 0 0 / 0.2)"}
     }
-    useEffect(() => {
-        GetToken()
-    }, [])
     return (
         <Navbar
             bg={context.PrimaryColor.toString()}

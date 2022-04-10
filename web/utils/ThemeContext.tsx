@@ -10,6 +10,12 @@ const ThemeContext = React.createContext<IThemeContext>([{PrimaryColor:"",Second
 export default ThemeContext
 
 export const ThemeContextProvider = (props:any)=>{
+  let PrimaryColor = "dark"
+  let SecondaryColor = "white"
+  if(typeof window !== 'undefined' &&localStorage){
+    PrimaryColor = localStorage.getItem("PrimaryColor")!
+    SecondaryColor = localStorage.getItem("SecondaryColor")!
+  }
   const [colors, setColors] = useState<ITheme>(
     {
       PrimaryColor:"dark",
