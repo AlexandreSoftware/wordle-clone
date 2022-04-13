@@ -11,11 +11,12 @@ import ThemeContext from "../utils/ThemeContext";
 import { useContext, useEffect, useState } from "react";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 import GetToken from "../utils/GetToken";
+import TokenContext from "../utils/TokenContext";
 export default function NavBar() {
 
     let formattedbutton = "m-2 text-center rounded px-3"
     let [context, setContext] = useContext(ThemeContext)
-    let [token,setToken] =useState<string>()
+    let [token,setToken] =useContext(TokenContext)
     
     function invertColors() {
         if (context.PrimaryColor == "white"){
