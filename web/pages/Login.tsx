@@ -37,8 +37,8 @@ export default function Login(){
     }
     return (    
         <div className=" d-inline-flex justify-content-center align-items-center h-100 w-100" >
-            <div className=" d-inline-flex justify-content-center align-items-center h-25">
-                <motion.div className={`bg-warning overflow ${Styles.mockgame}`}>
+            <div className=" d-inline-flex justify-content-center align-items-center h-25 text-align-top">
+                <motion.div className={`bg-warning overflow ${Styles.mockgame}`} initial={{x:"-100vw"}} animate={{x:0}} transition={{ease: "easeIn",duration: 0.8,type:"tween"}} >
                     {CreateGameArray(
                         WordleSampleGame,"")}
                 </motion.div>
